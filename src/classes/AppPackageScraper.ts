@@ -16,8 +16,7 @@ export default class AppPackageScraper {
     constructor(private readonly options: AppPackageScraperOptions = {}) {}
 
     async fetchVersions(app: AppPackageScraperApp) {
-        const isApp = (appName: keyof typeof AppPackageScraperApp) => AppPackageScraper.isApp(appName, app)
-        const { skipOnBadFormatting = true } = this.options
+        const isApp = (appName: keyof typeof AppPackageScraperApp) => this._isApp(appName, app)
         const throwBadFormattingError = function () { throw new AppPackageScraperError('INVALID_WEB_FORMAT') }
 
         const url = `${AppPackageScraper.baseDomain}/uploads/?appcategory=${
@@ -35,31 +34,22 @@ export default class AppPackageScraper {
             }
         })
 
-        AppPackageScraper.checkRequest(response)
+        this._checkRequest(response)
 
         const list = load(await response.text())(`#primary h5.appRowTitle.wrapText.marginZero.block-on-mobile`).get()
         const versions: AppPackageScraperAppVersion[] = []
 
         for (const element of list) {
-            if (!element.attribs['title']) {
-                if (skipOnBadFormatting) continue
-                throwBadFormattingError()
-            }
+            if (!element.attribs['title']) throwBadFormattingError()
 
             const title = element.attribs['title']!.toLowerCase()
             if (AppPackageScraper.excludableVersionsTitleList.some((string) => title.includes(string))) continue
 
             const unsafeVersion = title.split(' ')[1]
-            if (!unsafeVersion) {
-                if (skipOnBadFormatting) continue
-                throwBadFormattingError()
-            }
+            if (!unsafeVersion) throwBadFormattingError()
 
             const match = unsafeVersion!.match(/^(\d+(?:\.\d+)?(?:\.\d+)?)(?:\-\w+)?$/)
-            if (!match || !match[0]) {
-                if (skipOnBadFormatting) continue
-                throwBadFormattingError()
-            }
+            if (!match || !match[0]) throwBadFormattingError()
             
             const version = match![0]!
                 .replace(/\.0(\d+)/g, '.$1')
@@ -77,12 +67,12 @@ export default class AppPackageScraper {
     }
 
     async fetchDownload(app: AppPackageScraperApp, version: string, arch?: ArchResolvable) {
-        const isApp = (appName: keyof typeof AppPackageScraperApp) => AppPackageScraper.isApp(appName, app)
+        const isApp = (appName: keyof typeof AppPackageScraperApp) => this._isApp(appName, app)
         const throwBadFormattingError = function () { throw new AppPackageScraperError('INVALID_WEB_FORMAT') }
 
         const actualArch = arch || this.options.arch
         const urlVersion = version.replaceAll('.', '-')
-        const url = `${AppPackageScraper.baseDomain}/apk/${AppPackageScraper.appendVersioning(
+        const url = `${AppPackageScraper.baseDomain}/apk/${this._appendVersioning(
             isApp('YouTube') ? 'google-inc/youtube/youtube' :
             isApp('YouTubeMusic') ? 'google-inc/youtube-music/youtube-music' :
             isApp('Twitter') ? 'twitter-inc/twitter/twitter' :
@@ -97,7 +87,7 @@ export default class AppPackageScraper {
             }
         })
 
-        const $ = load(await AppPackageScraper.responseToText(response))
+        const $ = load(await this._responseToText(response))
         const href = (actualArch && isApp('YouTubeMusic')) ?
             $(`div:contains("${actualArch}")`)
                 .parent()
@@ -116,39 +106,38 @@ export default class AppPackageScraper {
 
         if (!href) throwBadFormattingError()
 
-        const downloadPageBody = await AppPackageScraper.responseToText(await fetch(`${AppPackageScraper.baseDomain}${href}`))
+        const downloadPageBody = await this._responseToText(await fetch(`${AppPackageScraper.baseDomain}${href}`))
 
         const finalPageUrl = load(downloadPageBody)('a[class^="accent_bg btn btn-flat downloadButton"]').first().attr('href')
         if (!finalPageUrl) throwBadFormattingError()
 
-        const finalPageBody = await AppPackageScraper.responseToText(await fetch(`${AppPackageScraper.baseDomain}${finalPageUrl}`))
+        const finalPageBody = await this._responseToText(await fetch(`${AppPackageScraper.baseDomain}${finalPageUrl}`))
         const downloadUrl = `${AppPackageScraper.baseDomain}${load(finalPageBody)('a[rel="nofollow"]').first().attr('href')}`
 
         if (!downloadUrl) throw new AppPackageScraperError('DOWNLOAD_URL_UNAVAILABLE')
         return downloadUrl
     }
 
-    static isApp(entry: keyof typeof AppPackageScraperApp, value: AppPackageScraperApp) {
+    private _isApp(entry: keyof typeof AppPackageScraperApp, value: AppPackageScraperApp) {
         return AppPackageScraperApp[entry] === value
     }
 
-    static checkRequest(res: Response) {
+    private _checkRequest(res: Response) {
         if (!res.ok) throw new AppPackageScraperError('REQUEST_NOT_OK', res.status)
         return true
     }
 
-    static appendVersioning(url: string, version: string) {
+    private _appendVersioning(url: string, version: string) {
         return `${url}-${version}-release`
     }
     
-    static responseToText(res: Response) {
-        AppPackageScraper.checkRequest(res)
+    private _responseToText(res: Response) {
+        this._checkRequest(res)
         return res.text()
     }
 }
 
 export interface AppPackageScraperOptions {
-    skipOnBadFormatting?: boolean
     arch?: ArchResolvable
 }
 
