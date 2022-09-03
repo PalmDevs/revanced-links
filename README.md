@@ -10,22 +10,21 @@ npm i https://github.com/PalmDevs/revanced-download-links
 Here's an example snippet to get latest essentials for ReVanced app building.  
 If you want the full documentation, you can go to [this section](DOCUMENTATION.md).
 ```js
-import RDL, { App } from 'revanced-download-links'
+import { ReVancedDownloadLinks as RDL, App } from './index.js'
 
 // Creates a new instance of RDL
 // All the options are optional
 const rdl = new RDL({
     appFetcherSettings: {
-        arch: '(device arch)'
+        arch: 'arm64-v8a'
     },
     gitHubSettings: {
-        apiKey: 'secret123',
         dataPerPage: 10,
     }
 })
 
 // As easy as that, now just use it!
-const { patches, integrations, cli } = await rdl.revanced.fetchLatestRelease()
+const { patches, integrations, cli } = await rdl.revanced.fetchLatestReleases()
 const latestYouTubeAPK = await rdl.packages.fetchLatestRelease(App.YouTube)
 
 // Do something with the URLs
