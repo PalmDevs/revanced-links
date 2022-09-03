@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "description": "A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror",
   "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
   "type": "module",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
-    "start": "tsc --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install": "npm run compile",
+    "build": "npm run compile && npm run docs",
+    "compile": "tsc",
+    "watch": "tsc --watch",
+    "docs": "typedoc --out docs src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -27,6 +30,7 @@
   "homepage": "https://github.com/PalmDevs/revanced-download-links#readme",
   "devDependencies": {
     "@types/semver": "^7.3.12",
+    "typedoc": "^0.23.13",
     "typescript": "^4.8.2"
   },
   "dependencies": {
