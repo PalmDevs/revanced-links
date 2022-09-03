@@ -1,4 +1,4 @@
-import { ReVancedDownloadLinksOptions } from './ReVancedDownloadLinks.js'
+import { ReVancedLinksOptions } from './ReVancedLinks.js'
 import { ReVancedCLIFetcher, ReVancedIntegrationsFetcher, ReVancedPatchesFetcher } from './ReVancedRepositoryFetcher.js'
 
 export default class ReVancedFetcher {
@@ -40,4 +40,4 @@ export default class ReVancedFetcher {
     }
 }
 
-export type ReVancedFetcherOptions = Omit<ReVancedDownloadLinksOptions, 'arch'>
+export type ReVancedFetcherOptions = Omit<ReVancedLinksOptions, 'arch'>

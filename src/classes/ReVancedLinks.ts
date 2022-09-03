@@ -2,8 +2,8 @@ import AppPackageFetcher, { AppPackageFetcherOptions } from './AppPackageFetcher
 import ReVancedFetcher from './ReVancedFetcher.js'
 import { ReVancedRepositoryFetcherChildrenOptions } from './ReVancedRepositoryFetcher.js'
 
-export default class ReVancedDownloadLinks {
-    private readonly _options: ReVancedDownloadLinksOptions
+export default class ReVancedLinks {
+    private readonly _options: ReVancedLinksOptions
     readonly revanced: ReVancedFetcher
     readonly packages: AppPackageFetcher
 
@@ -11,14 +11,14 @@ export default class ReVancedDownloadLinks {
      * The combined version of all utilities! **POWER!**
      * @param options Configurations and options
      */
-    constructor(options: ReVancedDownloadLinksOptions = {}) {
+    constructor(options: ReVancedLinksOptions = {}) {
         this._options = options
         this.revanced = new ReVancedFetcher(this._options)
         this.packages = new AppPackageFetcher(this._options.appFetcherSettings)
     }
 }
 
-export interface ReVancedDownloadLinksOptions {
+export interface ReVancedLinksOptions {
     appFetcherSettings?: AppPackageFetcherOptions
     gitHubSettings?: ReVancedRepositoryFetcherChildrenOptions
 }

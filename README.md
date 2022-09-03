@@ -1,20 +1,20 @@
-# Revanced Download Links
+# ReVanced Links
 A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror.  
 **THIS MODULE ONLY SUPPORTS ESM!** You could try compiling this to CommonJS yourself. There will be an official support soon.
 
 ## Getting started
 Head to your terminal and install the package
 ```sh
-npm i https://github.com/PalmDevs/revanced-download-links
+npm i revanced-links
 ```
 Here's an example snippet to get latest essentials for ReVanced app building.  
-If you want the full documentation, please refer to [here](https://palmdevs.github.io/revanced-download-links/) instead.
+If you want the full documentation, please refer to [here](https://palmdevs.github.io/revanced-links/) instead.
 ```js
-import { ReVancedDownloadLinks as RDL, App } from './index.js'
+import { ReVancedLinks as RL, App } from './index.js'
 
-// Creates a new instance of RDL
+// Creates a new instance of RL
 // All the options are optional
-const rdl = new RDL({
+const rdl = new RL({
     appFetcherSettings: {
         arch: 'arm64-v8a'
     },

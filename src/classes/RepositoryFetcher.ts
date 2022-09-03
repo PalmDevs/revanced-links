@@ -9,11 +9,11 @@ export default class RepositoryFetcher {
     /**
      * @param options Configurations and options
      * @example
-     * import { RepositoryFetcher } from 'revanced-download-links'
+     * import { RepositoryFetcher } from 'revanced-links'
      * 
      * const fetcher = new RepositoryFetcher({
      *     repositoryOwner: 'PalmDevs',
-     *     repositoryName: 'revanced-download-links'
+     *     repositoryName: 'revanced-links'
      *     apiKey: 'secret123',
      *     dataPerPage: 10
      * })
@@ -30,7 +30,7 @@ export default class RepositoryFetcher {
      * @param page The page number to fetch
      * @returns An array of releases object
      * @example
-     * import { RepositoryFetcher } from 'revanced-download-links'
+     * import { RepositoryFetcher } from 'revanced-links'
      * 
      * const fetcher = new RepositoryFetcher({ ... })
      * const releases = await fetcher.fetchReleases()
@@ -54,7 +54,7 @@ export default class RepositoryFetcher {
      * Fetches the latest release from the repository
      * @returns A release object
      * @example
-     * import { RepositoryFetcher } from 'revanced-download-links'
+     * import { RepositoryFetcher } from 'revanced-links'
      * 
      * const fetcher = new RepositoryFetcher({ ... })
      * const releases = await fetcher.fetchLatestRelease()

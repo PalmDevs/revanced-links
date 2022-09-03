@@ -7,7 +7,7 @@ export default class ReVancedRepositoryFetcher extends RepositoryFetcher {
      * Fetches releases from ReVanced-owned repositories
      * @param options Configurations and options
      * @example
-     * import { ReVancedRepositoryFetcher } from 'revanced-download-links'
+     * import { ReVancedRepositoryFetcher } from 'revanced-links'
      * 
      * const fetcher = new ReVancedRepositoryFetcher({
      *     repositoryName: 'revanced-manager',

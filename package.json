@@ -1,29 +1,29 @@
 {
-  "name": "revanced-download-links",
+  "name": "revanced-links",
   "version": "0.1.0",
   "description": "A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "type": "module",
   "files": [
-    "dist"
+    "dist/**/*"
   ],
   "scripts": {
     "watch": "npm run start",
     "start:nc": "nodemon --exec \"npm run build:nc && node ./dist/\" --watch . --ext ts,json --ignore dist/*",
     "start": "nodemon --exec \"npm run build && node ./dist/\" --watch . --ext ts,json --ignore dist/*",
     "cleanup": "del-cli ./dist && del-cli ./docs",
-    "install": "npm run compile",
     "build": "npm run cleanup && npm run build:nc",
     "build:nc": "npm run compile:nc && npm run docs:nc",
     "compile": "npm run cleanup && npm run compile:nc",
     "compile:nc": "tsc",
     "docs": "npm run cleanup && npm run docs:nc",
-    "docs:nc": "typedoc --out docs src/index.ts"
+    "docs:nc": "typedoc --out docs src/index.ts",
+    "publish": "npm run compile"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PalmDevs/revanced-download-links.git"
+    "url": "git+https://github.com/PalmDevs/revanced-links.git"
   },
   "keywords": [
     "revanced"
@@ -31,9 +31,9 @@
   "author": "PalmDevs",
   "license": "GPL-3.0-only",
   "bugs": {
-    "url": "https://github.com/PalmDevs/revanced-download-links/issues"
+    "url": "https://github.com/PalmDevs/revanced-links/issues"
   },
-  "homepage": "https://github.com/PalmDevs/revanced-download-links#readme",
+  "homepage": "https://github.com/PalmDevs/revanced-links#readme",
   "devDependencies": {
     "@types/node": "^18.7.14",
     "@types/semver": "^7.3.12",

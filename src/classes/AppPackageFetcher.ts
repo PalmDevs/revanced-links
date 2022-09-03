@@ -12,7 +12,7 @@ export default class AppPackageFetcher {
      * Fetches a ReVanced-support app package download URL
      * @param options Configurations and options
      * @example
-     * import { AppPackageFetcher } from 'revanced-download-links'
+     * import { AppPackageFetcher } from 'revanced-links'
      * 
      * const fetcher = new AppPackageFetcher({
      *     arch: 'arm64-v8a'
@@ -28,7 +28,7 @@ export default class AppPackageFetcher {
      * @param app An app to fetch 
      * @returns App version data
      * @example
-     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * import { AppPackageFetcher, App } from 'revanced-links'
      * 
      * const fetcher = new AppPackageFetcher({ ... })
      * const version = await fetcher.fetchLatestVersion(App.YouTube)
@@ -43,7 +43,7 @@ export default class AppPackageFetcher {
      * @param app An app to fetch 
      * @returns App version data
      * @example
-     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * import { AppPackageFetcher, App } from 'revanced-links'
      * 
      * const fetcher = new AppPackageFetcher({ ... })
      * const version = await fetcher.fetchLatestStableVersion(App.YouTube)
@@ -58,7 +58,7 @@ export default class AppPackageFetcher {
      * @param app An app to fetch 
      * @returns A download URL
      * @example
-     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * import { AppPackageFetcher, App } from 'revanced-links'
      * 
      * const fetcher = new AppPackageFetcher({ ... })
      * const url = await fetcher.fetchLatestRelease(App.YouTube)
@@ -72,7 +72,7 @@ export default class AppPackageFetcher {
      * @param app An app to fetch 
      * @returns A download URL
      * @example
-     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * import { AppPackageFetcher, App } from 'revanced-links'
      * 
      * const fetcher = new AppPackageFetcher({ ... })
      * const url = await fetcher.fetchLatestStableRelease(App.YouTube)
@@ -86,7 +86,7 @@ export default class AppPackageFetcher {
      * @param app An app to fetch 
      * @returns An array of app version data
      * @example
-     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * import { AppPackageFetcher, App } from 'revanced-links'
      * 
      * const fetcher = new AppPackageFetcher({ ... })
      * const versions = await fetcher.fetchVersions(App.YouTube)
@@ -101,7 +101,7 @@ export default class AppPackageFetcher {
      * @param version A version of the app to fetch
      * @returns A download URL
      * @example
-     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * import { AppPackageFetcher, App } from 'revanced-links'
      * 
      * const fetcher = new AppPackageFetcher({ ... })
      * const url = await fetcher.fetchDownload(App.YouTube, '17.33.42')
