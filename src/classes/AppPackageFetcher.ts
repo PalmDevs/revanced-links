@@ -35,7 +35,7 @@ export default class AppPackageFetcher {
      */
     async fetchLatestVersion(app: App) {
         const versions = await this._fetchv(app)
-        return versions.at(-1)
+        return versions[1]
     }
 
     /**
