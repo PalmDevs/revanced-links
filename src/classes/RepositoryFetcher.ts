@@ -1,16 +1,40 @@
 import { Octokit } from '@octokit/rest'
 import { RequestError } from '@octokit/request-error'
-import CustomErrorConstructor from '../util/CustomErrorConstructor'
+import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
 
 export default class RepositoryFetcher {
     private readonly _octokit: Octokit
+    protected readonly _options: RepositoryFetcherOptions
 
-    constructor(protected readonly _options: RepositoryFetcherOptions) {
+    /**
+     * @param options Configurations and options
+     * @example
+     * import { RepositoryFetcher } from 'revanced-download-links'
+     * 
+     * const fetcher = new RepositoryFetcher({
+     *     repositoryOwner: 'PalmDevs',
+     *     repositoryName: 'revanced-download-links'
+     *     apiKey: 'secret123',
+     *     dataPerPage: 10
+     * })
+     */
+    constructor(options: RepositoryFetcherOptions) {
+        this._options = options
         this._octokit = new Octokit({
             auth: this._options.apiKey
         })
     }
 
+    /**
+     * Fetches releases from the repository
+     * @param page The page number to fetch
+     * @returns An array of releases object
+     * @example
+     * import { RepositoryFetcher } from 'revanced-download-links'
+     * 
+     * const fetcher = new RepositoryFetcher({ ... })
+     * const releases = await fetcher.fetchReleases()
+     */
     async fetchReleases(page: number = 0) {
         try {
             const { data: releases } = await this._octokit.rest.repos.listReleases({
@@ -26,6 +50,15 @@ export default class RepositoryFetcher {
         }
     }
 
+    /**
+     * Fetches the latest release from the repository
+     * @returns A release object
+     * @example
+     * import { RepositoryFetcher } from 'revanced-download-links'
+     * 
+     * const fetcher = new RepositoryFetcher({ ... })
+     * const releases = await fetcher.fetchLatestRelease()
+     */
     async fetchLatestRelease() {
         try {
             const { data: release } = await this._octokit.rest.repos.getLatestRelease({
@@ -50,13 +83,26 @@ export default class RepositoryFetcher {
 }
 
 export interface RepositoryFetcherOptions {
+    /**
+     * Repository owner
+     */
     repositoryOwner: string
+    /**
+     * Repository name
+     */
     repositoryName: string
+    /**
+     * GitHub API key
+     */
     apiKey?: string
+    /**
+     * Amount of releases (data) per page
+     * GitHub uses pagination for their APIs
+     */
     dataPerPage?: number
 }
 
-export const RepositoryFetcherErrorMessages = {
+const RepositoryFetcherErrorMessages = {
     'UNKNOWN_ERROR': (e: unknown) => `Cannot identify the error, ${e}`,
     'UNKNOWN_REQUEST_ERROR': (e: RequestError) => `Cannot identify what's wrong, ${e}`,
     'NOT_FOUND': 'Repository not found',
@@ -65,4 +111,4 @@ export const RepositoryFetcherErrorMessages = {
     'BAD_HOST': 'Host returned with a 5xx code'
 } as const
 
-export const RepositoryFetcherError = new CustomErrorConstructor(Error, RepositoryFetcherErrorMessages).error
+const RepositoryFetcherError = new CustomErrorConstructor(Error, RepositoryFetcherErrorMessages).error

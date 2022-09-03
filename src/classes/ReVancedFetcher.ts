@@ -1,5 +1,5 @@
-import { ReVancedDownloadLinksOptions } from './ReVancedDownloadLinks'
-import { ReVancedCLIFetcher, ReVancedIntegrationsFetcher, ReVancedPatchesFetcher } from './ReVancedRepositoryFetcher'
+import { ReVancedDownloadLinksOptions } from './ReVancedDownloadLinks.js'
+import { ReVancedCLIFetcher, ReVancedIntegrationsFetcher, ReVancedPatchesFetcher } from './ReVancedRepositoryFetcher.js'
 
 export default class ReVancedFetcher {
     private readonly _options: ReVancedFetcherOptions
@@ -7,6 +7,17 @@ export default class ReVancedFetcher {
     readonly integrations: ReVancedIntegrationsFetcher
     readonly cli: ReVancedCLIFetcher
 
+    /**
+     * Fetches ReVanced essentials releases
+     * @param options Configurations and options
+     * @example
+     * import { ReVancedFetcher } from 'revanced-downloads-links'
+     * 
+     * const fetcher = new ReVancedFetcher({
+     *     appFetcherSettings: { ... },
+     *     gitHubSettings: { ... }
+     * })
+     */
     constructor(options: ReVancedFetcherOptions) {
         this._options = options
         this.patches = new ReVancedPatchesFetcher(this._options.gitHubSettings)
@@ -14,10 +25,19 @@ export default class ReVancedFetcher {
         this.cli = new ReVancedCLIFetcher(this._options.gitHubSettings)
     }
 
-    async fetchLatestRelease() {
+    /**
+     * Fetches the latest release of ReVanced essentials
+     * @returns An object with values containing asset releases
+     * @example
+     * import { ReVancedFetcher } from 'revanced-downloads-links'
+     * 
+     * const fetcher = new ReVancedFetcher({ ... })
+     * const latestReleases = await fetcher.fetchLatestReleases()
+     */
+    async fetchLatestReleases() {
         const [cli, patches, integrations] = await Promise.all([this.cli.fetchLatestRelease(), this.patches.fetchLatestRelease(), this.integrations.fetchLatestRelease()])
         return { cli, patches, integrations }
     }
 }
 
-type ReVancedFetcherOptions = Omit<ReVancedDownloadLinksOptions, 'arch'>
+export type ReVancedFetcherOptions = Omit<ReVancedDownloadLinksOptions, 'arch'>

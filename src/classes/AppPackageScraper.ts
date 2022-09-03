@@ -5,9 +5,9 @@
 
 import { load } from 'cheerio'
 import fetch, { Response } from 'node-fetch'
-import semverLessThan from 'semver/functions/lt'
+import semverLessThan from 'semver/functions/lt.js'
 
-import CustomErrorConstructor from '../util/CustomErrorConstructor'
+import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
 
 export default class AppPackageScraper {
     static readonly baseDomain = 'https://apkmirror.com'

@@ -1,12 +1,11 @@
-import AppPackageFetcher, { App, AppPackageFetcherOptions, AppVersion, ArchResolvable } from './classes/AppPackageFetcher'
-import RepositoryFetcher, { RepositoryFetcherOptions } from './classes/RepositoryFetcher'
-import ReVancedDownloadLinks, { ReVancedDownloadLinksOptions } from './classes/ReVancedDownloadLinks'
-import ReVancedFetcher from './classes/ReVancedFetcher'
-import { ReVancedCLIFetcher, ReVancedIntegrationsFetcher, ReVancedPatchesFetcher, ReVancedPatchesAssets, ReVancedRepositoryFetcherChildrenOptions } from './classes/ReVancedRepositoryFetcher'
+import AppPackageFetcher, { App, AppPackageFetcherOptions, AppVersion, ArchResolvable } from './classes/AppPackageFetcher.js'
+import RepositoryFetcher, { RepositoryFetcherOptions } from './classes/RepositoryFetcher.js'
+import ReVancedDownloadLinks, { ReVancedDownloadLinksOptions } from './classes/ReVancedDownloadLinks.js'
+import ReVancedFetcher, { ReVancedFetcherOptions } from './classes/ReVancedFetcher.js'
+import { ReVancedCLIFetcher, ReVancedIntegrationsFetcher, ReVancedPatchesFetcher, ReVancedPatchesAssets, ReVancedRepositoryFetcherChildrenOptions } from './classes/ReVancedRepositoryFetcher.js'
 
-export default ReVancedDownloadLinks
 export { ReVancedDownloadLinks, ReVancedDownloadLinksOptions }
 export { AppPackageFetcher, AppPackageFetcherOptions, App, AppVersion, ArchResolvable }
 export { RepositoryFetcher, RepositoryFetcherOptions }
-export { ReVancedFetcher }
+export { ReVancedFetcher, ReVancedFetcherOptions }
 export { ReVancedPatchesFetcher, ReVancedIntegrationsFetcher, ReVancedCLIFetcher, ReVancedPatchesAssets, ReVancedRepositoryFetcherChildrenOptions }

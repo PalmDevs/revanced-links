@@ -1,40 +1,111 @@
 // * This is a wrapper class for AppPackageScraper
+// * So people don't go too low-level with it
 
-import CustomErrorConstructor from '../util/CustomErrorConstructor'
-import AppPackageScraper, { AppPackageScraperApp as App, AppPackageScraperAppVersion, ArchResolvable } from './AppPackageScraper'
+import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
+import AppPackageScraper, { AppPackageScraperApp as App, AppPackageScraperAppVersion, ArchResolvable } from './AppPackageScraper.js'
 
-// * So people don't go too low level with it
 export default class AppPackageFetcher {
     private readonly _options: AppPackageFetcherOptions
     private readonly _scraper: AppPackageScraper
 
+    /**
+     * Fetches a ReVanced-support app package download URL
+     * @param options Configurations and options
+     * @example
+     * import { AppPackageFetcher } from 'revanced-download-links'
+     * 
+     * const fetcher = new AppPackageFetcher({
+     *     arch: 'arm64-v8a'
+     * })
+     */
     constructor(options: AppPackageFetcherOptions = {}) {
         this._options = options
         this._scraper = new AppPackageScraper(this._options)
     }
 
+    /**
+     * Fetches the latest version available
+     * @param app An app to fetch 
+     * @returns App version data
+     * @example
+     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * 
+     * const fetcher = new AppPackageFetcher({ ... })
+     * const version = await fetcher.fetchLatestVersion(App.YouTube)
+     */
     async fetchLatestVersion(app: App) {
         const versions = await this._fetchv(app)
         return versions.at(-1)
     }
 
+    /**
+     * Fetches the latest stable *(non-beta, non-alpha)* version available
+     * @param app An app to fetch 
+     * @returns App version data
+     * @example
+     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * 
+     * const fetcher = new AppPackageFetcher({ ... })
+     * const version = await fetcher.fetchLatestStableVersion(App.YouTube)
+     */
     async fetchLatestStableVersion(app: App) {
         const versions = await this._fetchv(app)
         return versions.find((version) => !version.beta && !version.alpha)!
     }
 
+    /**
+     * Fetches a download URL for the latest version of an app package
+     * @param app An app to fetch 
+     * @returns A download URL
+     * @example
+     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * 
+     * const fetcher = new AppPackageFetcher({ ... })
+     * const url = await fetcher.fetchLatestRelease(App.YouTube)
+     */
     async fetchLatestRelease(app: App) {
         return await this._fetchd(app, await this._fetchf(app))
     }
 
+    /**
+     * Fetches a download URL for the latest stable *(non-beta, non-alpha)* version of an app package
+     * @param app An app to fetch 
+     * @returns A download URL
+     * @example
+     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * 
+     * const fetcher = new AppPackageFetcher({ ... })
+     * const url = await fetcher.fetchLatestStableRelease(App.YouTube)
+     */
     async fetchLatestStableRelease(app: App) {
         return await this._fetchd(app, await this._fetchf(app, false))
     }
 
+    /**
+     * Fetches available app versions
+     * @param app An app to fetch 
+     * @returns An array of app version data
+     * @example
+     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * 
+     * const fetcher = new AppPackageFetcher({ ... })
+     * const versions = await fetcher.fetchVersions(App.YouTube)
+     */
     async fetchVersions(app: App) {
         return await this._scraper.fetchVersions(app)
     }
 
+    /**
+     * Fetches a download URL for an app with a specific version
+     * @param app An app to fetch
+     * @param version A version of the app to fetch
+     * @returns A download URL
+     * @example
+     * import { AppPackageFetcher, App } from 'revanced-download-links'
+     * 
+     * const fetcher = new AppPackageFetcher({ ... })
+     * const url = await fetcher.fetchDownload(App.YouTube, '17.33.42')
+     */
     async fetchDownload(app: App, version: string) {
         return await this._scraper.fetchDownload(app, version, this._options.arch)
     }
@@ -63,5 +134,8 @@ export const AppPackageFetcherErrorMessages = {
 export const AppPackageFetcherError = new CustomErrorConstructor(Error, AppPackageFetcherErrorMessages).error
 
 export interface AppPackageFetcherOptions {
+    /**
+     * Device architecture
+     */
     arch?: ArchResolvable
 }

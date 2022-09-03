@@ -1,12 +1,16 @@
-import AppPackageFetcher from './AppPackageFetcher'
-import { ArchResolvable } from './AppPackageScraper'
-import ReVancedFetcher from './ReVancedFetcher'
+import AppPackageFetcher, { AppPackageFetcherOptions } from './AppPackageFetcher.js'
+import ReVancedFetcher from './ReVancedFetcher.js'
+import { ReVancedRepositoryFetcherChildrenOptions } from './ReVancedRepositoryFetcher.js'
 
 export default class ReVancedDownloadLinks {
     private readonly _options: ReVancedDownloadLinksOptions
     readonly revanced: ReVancedFetcher
     readonly packages: AppPackageFetcher
 
+    /**
+     * The combined version of all utilities! **POWER!**
+     * @param options Configurations and options
+     */
     constructor(options: ReVancedDownloadLinksOptions = {}) {
         this._options = options
         this.revanced = new ReVancedFetcher(this._options)
@@ -15,11 +19,6 @@ export default class ReVancedDownloadLinks {
 }
 
 export interface ReVancedDownloadLinksOptions {
-    appFetcherSettings?: {
-        arch?: ArchResolvable
-    }
-    gitHubSettings?: {
-        apiKey?: string
-        dataPerPage?: number
-    }
+    appFetcherSettings?: AppPackageFetcherOptions
+    gitHubSettings?: ReVancedRepositoryFetcherChildrenOptions
 }
