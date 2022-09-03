@@ -4,10 +4,12 @@
     "experimentalDecorators": true,
 
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
 
     "outDir": "./dist",
-    "removeComments": true,
+    "declaration": true,
+    "declarationDir": "./dist/types",
+    "removeComments": false,
     "importsNotUsedAsValues": "remove",
     "newLine": "lf",
     "stripInternal": false,
