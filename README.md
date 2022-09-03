@@ -2,19 +2,21 @@
 A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror.  
 **THIS MODULE ONLY SUPPORTS ESM!** You could try compiling this to CommonJS yourself. There will be an official support soon.
 
-<details>
-    <summary><strong>Table of contents</strong></summary>
-    
-    ### [Features](#features)
-    ### [Installation](#installation)
-    ### [Getting Started](#getting-started)
-        * [Get essentials for parching YouTube](#get-essentials-for-patching-youtube)
-        * [Get latest patchable app packages](#get-essentials-for-patching-youtube)
-        * [Scrape unrelated app packages (BETA, may not work with some apps)](#scrape-unrelated-app-packages-beta-may-not-work-with-some-apps)
-    ### [Contribute](#contribute)
-        * [Setting up the environment](#setting-up-the-environment)
-        * [Scripts](#scripts)
-    ### [Discussions](#discussions)
+<details><summary><strong>Table of contents</strong></summary>
+
+- [ReVanced Links](#revanced-links)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Getting Started](#getting-started)
+    - [Get essentials for patching YouTube](#get-essentials-for-patching-youtube)
+    - [Get latest patchable app packages](#get-latest-patchable-app-packages)
+    - [Scrape unrelated app packages (BETA, may not work with some apps)](#scrape-unrelated-app-packages-beta-may-not-work-with-some-apps)
+  - [Contribute](#contribute)
+    - [Setting up the environment](#setting-up-the-environment)
+    - [Scripts](#scripts)
+    - [You're ready!](#youre-ready)
+  - [Discussions](#discussions)
+
 </details>
 
 ## Features
