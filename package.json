@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "postinstall": "npm run compile",
+    "install": "npm run compile",
     "build": "npm run compile && npm run docs",
     "compile": "tsc",
     "watch": "tsc --watch",
