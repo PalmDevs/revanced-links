@@ -8,7 +8,7 @@ Head to your terminal and install the package
 npm i https://github.com/PalmDevs/revanced-download-links
 ```
 Here's an example snippet to get latest essentials for ReVanced app building.  
-If you want the full documentation, you can go to [this section](DOCUMENTATION.md).
+If you want the full documentation, please refer to [here](https://palmdevs.github.io/revanced-download-links/) instead.
 ```js
 import { ReVancedDownloadLinks as RDL, App } from './index.js'
 
