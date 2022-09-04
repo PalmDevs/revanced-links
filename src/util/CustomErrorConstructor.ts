@@ -1,3 +1,5 @@
+import { isString } from './Validator.js'
+
 export default class CustomErrorConstructor<T extends typeof Error, M extends { [K in string]: ErrorMessageResolvable }> {
     messages: { [K in keyof M]: M[K] }
     error: Omit<T, 'constructor'> & {
@@ -13,12 +15,11 @@ export default class CustomErrorConstructor<T extends typeof Error, M extends { 
             code: C
 
             constructor(code: C, ...args: M[C] extends (...args: any[]) => string ? Parameters<M[C]> : never) {
-                const resolvable = messages[code]
+                if (!isString(code)) throw new Error('code is NOT string')
+                const resolvable = messages[code] ?? code
                 super(typeof resolvable === 'function' ? resolvable(...args) : resolvable)
 
                 this.code = code
-
-                Error.captureStackTrace(this, Error)
             }
 
             override get name() {

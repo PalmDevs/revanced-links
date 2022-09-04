@@ -1,6 +1,9 @@
 import { Octokit } from '@octokit/rest'
 import { RequestError } from '@octokit/request-error'
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
+import { isNumberButNotNaN, isEmptyString, isNotEmptyArray } from '../util/Validator.js'
+
+export const REPOSITORY_REGEX = /[\w-]+/
 
 export default class RepositoryFetcher {
     private readonly _octokit: Octokit
@@ -19,6 +22,12 @@ export default class RepositoryFetcher {
      * })
      */
     constructor(options: RepositoryFetcherOptions) {
+        if (!isNumberButNotNaN(options.dataPerPage)) throw new RepositoryFetcherError('BAD_OPTIONS', 'options.dataPerPage', 'be', ['a number, but not NaN']);
+        (['repositoryName', 'repositoryOwner'] as const).forEach((key) => {
+            if (isEmptyString(options[key])) throw new RepositoryFetcherError('BAD_OPTIONS', `options.${key}`, 'be', ['a non-empty string'])
+        })
+        if (typeof options.apiKey !== 'undefined' && isEmptyString(options.apiKey)) throw new RepositoryFetcherError('BAD_OPTIONS', 'options.apiKey', 'be', ['a non-empty string'])
+
         this._options = options
         this._octokit = new Octokit({
             auth: this._options.apiKey
@@ -36,6 +45,8 @@ export default class RepositoryFetcher {
      * const releases = await fetcher.fetchReleases()
      */
     async fetchReleases(page: number = 0) {
+        if (!isNumberButNotNaN(page)) throw new RepositoryFetcherError('BAD_OPTIONS', 'page', 'be', ['a number, but not NaN'])
+
         try {
             const { data: releases } = await this._octokit.rest.repos.listReleases({
                 owner: this._options.repositoryOwner,
@@ -108,7 +119,8 @@ const RepositoryFetcherErrorMessages = {
     'NOT_FOUND': 'Repository not found',
     'BAD_REQUEST': (code: number) => `Bad request data, status code ${code}`,
     'RATELIMITED': (keyExists?: boolean) => `You are ratelimited from GitHub! ${keyExists ? 'You already have an API key, check your code if there is any non-ending loop' : 'Please make an API key'}`,
-    'BAD_HOST': 'Host returned with a 5xx code'
+    'BAD_HOST': 'Host returned with a 5xx code',
+    'BAD_OPTIONS': (property?: string, what?: string, should?: string[]) => `Bad options${property ? ` for ${property}${isNotEmptyArray(should) ? `, must ${what} ${should!.join(', ')}` : ''}` : ''}`
 } as const
 
 const RepositoryFetcherError = new CustomErrorConstructor(Error, RepositoryFetcherErrorMessages).error

@@ -96,7 +96,7 @@ const ams = new APKMirrorScraper({
     arch: 'arm64-v8a'
 })
 
-const gWalletDownloadUrl = ams.fetchDownload('google-inc/google-wallet/google-wallet', '2.153.469766798')
+const gWalletDownloadUrl = ams.fetchDownload('google-inc/google-wallet', '2.153.469766798')
 console.log(gWalletDownloadUrl)
 ```
 
@@ -123,7 +123,7 @@ yarn install
 ```
 
 ### Scripts
-When there are scripts, there are productivity. Here's a list of scripts you should know about.
+When there are scripts, there are productivity. Here's a list of scripts you should know about.  
 **Note**: Anything ending in `:nc` means no-cleanup, this usually results in junk files and weird errors.
   - `watch`, `start`, `start:nc`: Starts the development environment, your code will automatically compile on save
   - `compile`, `compile:nc`: Only compiles the code, doesn't make documentation

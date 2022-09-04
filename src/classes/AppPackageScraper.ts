@@ -45,12 +45,12 @@ export default class AppPackageScraper {
     async fetchDownload(app: AppPackageScraperApp, version: string, arch?: ArchResolvable) {
         const isApp = (appName: keyof typeof AppPackageScraperApp) => this._isApp(appName, app)
         const appCategory = 
-            isApp('YouTube') ? 'google-inc/youtube/youtube' :
-            isApp('YouTubeMusic') ? 'google-inc/youtube-music/youtube-music' :
-            isApp('Twitter') ? 'twitter-inc/twitter/twitter' :
-            isApp('Reddit') ? 'redditinc/reddit/reddit' :
-            isApp('WarnWetter') ? 'deutscher-wetterdienst/warnwetter/warnwetter' :
-            isApp('TikTok') ? 'tiktok-pte-ltd/tik-tok/tik-tok' : (() => { throw new AppPackageScraperError('INVALID_APP', app) })()
+            isApp('YouTube') ? 'google-inc/youtube' :
+            isApp('YouTubeMusic') ? 'google-inc/youtube-music' :
+            isApp('Twitter') ? 'twitter-inc/twitter' :
+            isApp('Reddit') ? 'redditinc/reddit' :
+            isApp('WarnWetter') ? 'deutscher-wetterdienst/warnwetter' :
+            isApp('TikTok') ? 'tiktok-pte-ltd/tik-tok' : (() => { throw new AppPackageScraperError('INVALID_APP', app) })()
 
         return await this._scraper.fetchDownload(appCategory, version, arch)
     }
@@ -80,7 +80,7 @@ export enum AppPackageScraperApp {
 }
 
 const AppPackageScraperErrorMessages = {
-    'INVALID_APP': (app?: AppPackageScraperApp) => `Invalid app ID '${app}'`
+    'INVALID_APP': (app?: AppPackageScraperApp) => `Invalid app ID '${app}'`,
 } as const
 
 const AppPackageScraperError = new CustomErrorConstructor(Error, AppPackageScraperErrorMessages).error
