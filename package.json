@@ -1,6 +1,6 @@
 {
   "name": "revanced-links",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
