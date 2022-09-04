@@ -19,7 +19,7 @@
     "compile:nc": "tsc",
     "docs": "npm run cleanup && npm run docs:nc",
     "docs:nc": "typedoc --out docs src/index.ts",
-    "publish": "npm run compile"
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",
