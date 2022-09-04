@@ -129,6 +129,7 @@ When there are scripts, there are productivity. Here's a list of scripts you sho
   - `compile`, `compile:nc`: Only compiles the code, doesn't make documentation
   - `docs`, `docs:nc`: Only makes documentation, doesn't compile code
   - `cleanup`: This script is ran by other scripts, but this deletes `dist/` and `docs/`
+  - `cleanup:d`, `cleanup:c`: This script is ran by other scripts, but `:d` deletes `docs/` and `:c` deletes `dist/`
   - `build`, `build:nc`: Builds both documentation and distribution
 
 ### You're ready!
