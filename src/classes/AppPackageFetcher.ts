@@ -63,8 +63,8 @@ export default class AppPackageFetcher {
      * const fetcher = new AppPackageFetcher({ ... })
      * const url = await fetcher.fetchLatestRelease(App.YouTube)
      */
-    async fetchLatestRelease(app: App) {
-        return await this._fetchd(app, await this._fetchf(app))
+    async fetchLatestRelease(app: App, arch?: ArchResolvable) {
+        return await this._fetchd(app, await this._fetchf(app), arch)
     }
 
     /**
@@ -77,8 +77,8 @@ export default class AppPackageFetcher {
      * const fetcher = new AppPackageFetcher({ ... })
      * const url = await fetcher.fetchLatestStableRelease(App.YouTube)
      */
-    async fetchLatestStableRelease(app: App) {
-        return await this._fetchd(app, await this._fetchf(app, false))
+    async fetchLatestStableRelease(app: App, arch?: ArchResolvable) {
+        return await this._fetchd(app, await this._fetchf(app, false), arch)
     }
 
     /**
@@ -116,8 +116,8 @@ export default class AppPackageFetcher {
         return versionInfo
     }
 
-    private _fetchd(app: App, versionInfo: AppPackageScraperAppVersion) {
-        return this._scraper.fetchDownload(app, versionInfo.version, this._options.arch)
+    private _fetchd(app: App, versionInfo: AppPackageScraperAppVersion, arch?: ArchResolvable) {
+        return this._scraper.fetchDownload(app, versionInfo.version, arch ?? this._options.arch)
     }
 
     private _fetchv(app: App) {
