@@ -106,8 +106,8 @@ export default class AppPackageFetcher {
      * const fetcher = new AppPackageFetcher({ ... })
      * const url = await fetcher.fetchDownload(App.YouTube, '17.33.42')
      */
-    async fetchDownload(app: App, version: string) {
-        return await this._scraper.fetchDownload(app, version, this._options.arch)
+    async fetchDownload(app: App, version: string, arch?: ArchResolvable) {
+        return await this._scraper.fetchDownload(app, version, arch ?? this._options.arch)
     }
 
     private async _fetchf(app: App, latest: boolean = true) {
