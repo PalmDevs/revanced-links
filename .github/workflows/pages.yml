@@ -32,16 +32,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Generate documentation
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm install && npm run docs
+      - name: Install packages
+        run: npm install
+      - name: Run script
+        run: npm run docs
       - name: Setup pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
+        with:
+          path: docs/
 
   # Deployment job
   deploy:
