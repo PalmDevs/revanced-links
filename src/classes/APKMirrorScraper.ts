@@ -12,8 +12,8 @@ import { doesMatch, isNotEmptyArray } from '../util/Validator.js'
 
 export const EXTENDED_SEMVER_REGEX = /(?:.*?)((?:(?:[0-9]+)(?:\.[0-9]+)*(?:\-[a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*)*)(?: +\- +[a-zA-Z0-9]+)?)/gi
 export const ARCH_REGEX = /^arm64-v8a|armeabi-v7a|x86_64|x84$/
-export const APP_CATEGORY_REGEX = /^[\w-]+$/
-export const APP_ROUTE_REGEX = /^[\w-]+\/[\w-]+$/
+export const APP_CATEGORY_REGEX = /^[a-zA-Z-]+$/
+export const APP_ROUTE_REGEX = /^[a-zA-Z-]+\/[a-zA-Z-]+$/
 
 export default class APKMirrorScraper {
     static readonly baseDomain = 'https://apkmirror.com'
@@ -120,9 +120,9 @@ export default class APKMirrorScraper {
     }
 
     private _fixVersion(string: string) {
-        return string.replace(/\.0(\d+)/g, '.$1')
-            .replace(/^(\d+\.\d+)(?:.*)$/, '$1.0')
-            .replace(/^(\d+)(?:.*)$/, '$1.0.0')
+        return string.replace(/\.0([0-9]+)/g, '.$1')
+            .replace(/^([0-9]+\.[0-9]+)(?:.*)$/, '$1.0')
+            .replace(/^([0-9]+)(?:.*)$/, '$1.0.0')
     }
 
     private async _scrapeFromResponse(res: Response) {

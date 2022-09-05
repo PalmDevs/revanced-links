@@ -3,7 +3,7 @@ import { RequestError } from '@octokit/request-error'
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
 import { isNumberButNotNaN, isEmptyString, isNotEmptyArray } from '../util/Validator.js'
 
-export const REPOSITORY_REGEX = /[\w-]+/
+export const REPOSITORY_REGEX = /[a-zA-Z-]+/
 
 export default class RepositoryFetcher {
     private readonly _octokit: Octokit
