@@ -35,7 +35,7 @@ yarn add revanced-links
 ```
 
 ## Getting Started
-Here's an example snippet to get latest essentials for ReVanced app building.  
+Here's example snippets for you to get started.  
 If you want the full documentation, please refer to [here](https://palmdevs.github.io/revanced-links/) instead.
 
 ### Get essentials for patching YouTube
@@ -137,5 +137,5 @@ You're ready to be cool like a hackerman. 😎
 Now you can brag to your non-programmer friends about it!
 
 ## Discussions
-We have a Discord server for the [NRVM builder](https://github.com/PalmDevs/nrvm) which is closely related to this project.  
+We have a Discord server for [NRVM builder](https://github.com/PalmDevs/nrvm) which is closely related to this project.  
 You could join it with this [link](), there is a channel called **#revanced-links-discussions** specifically made for this purpose.
