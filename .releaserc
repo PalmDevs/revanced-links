@@ -23,6 +23,7 @@
         "assets": [
           "README.md",
           "CHANGELOG.md",
+          "package.json"
         ]
       }
     ]
