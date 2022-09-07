@@ -1,13 +1,13 @@
 import { Octokit } from '@octokit/rest'
 import { RequestError } from '@octokit/request-error'
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
-import { isNumberButNotNaN, isEmptyString, isNotEmptyArray } from '../util/Validator.js'
+import { isNumberButNotNaN, isEmptyString, isNotEmptyArray, doesMatch } from '../util/Validator.js'
 
 export const REPOSITORY_REGEX = /[a-zA-Z-]+/
 
 export default class RepositoryFetcher {
     private readonly _octokit: Octokit
-    protected readonly _options: RepositoryFetcherOptions
+    protected readonly _options: RepositoryFetcherOptions & { dataPerPage: number }
 
     /**
      * @param options Configurations and options
@@ -22,16 +22,17 @@ export default class RepositoryFetcher {
      * })
      */
     constructor(options: RepositoryFetcherOptions) {
-        if (!isNumberButNotNaN(options.dataPerPage)) throw new RepositoryFetcherError('BAD_OPTIONS', 'options.dataPerPage', 'be', ['a number, but not NaN']);
+        if (typeof options.dataPerPage === 'number' && !isNumberButNotNaN(options.dataPerPage)) throw new RepositoryFetcherError('BAD_OPTIONS', 'options.dataPerPage', 'be', ['a number, but not NaN']);
         (['repositoryName', 'repositoryOwner'] as const).forEach((key) => {
             if (isEmptyString(options[key])) throw new RepositoryFetcherError('BAD_OPTIONS', `options.${key}`, 'be', ['a non-empty string'])
+            if (!doesMatch(key, REPOSITORY_REGEX)) throw new RepositoryFetcherError('BAD_OPTIONS', `options.${key}`, 'match', [REPOSITORY_REGEX.source])
         })
         if (typeof options.apiKey !== 'undefined' && isEmptyString(options.apiKey)) throw new RepositoryFetcherError('BAD_OPTIONS', 'options.apiKey', 'be', ['a non-empty string'])
 
-        this._options = options
-        this._octokit = new Octokit({
-            auth: this._options.apiKey
-        })
+        this._options = Object.assign<{ dataPerPage: number }, RepositoryFetcherOptions>({
+            dataPerPage: 10
+        }, options)
+        this._octokit = new Octokit({ ...this._options })
     }
 
     /**
@@ -51,7 +52,7 @@ export default class RepositoryFetcher {
             const { data: releases } = await this._octokit.rest.repos.listReleases({
                 owner: this._options.repositoryOwner,
                 repo: this._options.repositoryName,
-                per_page: this._options.dataPerPage ?? 100,
+                per_page: this._options.dataPerPage,
                 page
             })
 
