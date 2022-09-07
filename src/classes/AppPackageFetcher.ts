@@ -25,7 +25,7 @@ export default class AppPackageFetcher {
 
     /**
      * Fetches the latest version available
-     * @param app An app to fetch 
+     * @param app The app to fetch 
      * @returns App version data
      * @example
      * import { AppPackageFetcher, App } from 'revanced-links'
@@ -40,7 +40,7 @@ export default class AppPackageFetcher {
 
     /**
      * Fetches the latest stable *(non-beta, non-alpha)* version available
-     * @param app An app to fetch 
+     * @param app The app to fetch 
      * @returns App version data
      * @example
      * import { AppPackageFetcher, App } from 'revanced-links'
@@ -55,7 +55,7 @@ export default class AppPackageFetcher {
 
     /**
      * Fetches a download URL for the latest version of an app package
-     * @param app An app to fetch 
+     * @param app The app to fetch 
      * @returns A download URL
      * @example
      * import { AppPackageFetcher, App } from 'revanced-links'
@@ -69,7 +69,7 @@ export default class AppPackageFetcher {
 
     /**
      * Fetches a download URL for the latest stable *(non-beta, non-alpha)* version of an app package
-     * @param app An app to fetch 
+     * @param app The app to fetch 
      * @returns A download URL
      * @example
      * import { AppPackageFetcher, App } from 'revanced-links'
@@ -83,7 +83,7 @@ export default class AppPackageFetcher {
 
     /**
      * Fetches available app versions
-     * @param app An app to fetch 
+     * @param app The app to fetch 
      * @returns An array of app version data
      * @example
      * import { AppPackageFetcher, App } from 'revanced-links'
@@ -97,7 +97,7 @@ export default class AppPackageFetcher {
 
     /**
      * Fetches a download URL for an app with a specific version
-     * @param app An app to fetch
+     * @param app The app to fetch
      * @param version A version of the app to fetch
      * @returns A download URL
      * @example

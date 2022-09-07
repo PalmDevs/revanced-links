@@ -3,6 +3,9 @@
 // for multiple parts of this code, it's really useful for others!
 // ! NOTICE ! //
 
+// This is not being export due to massive pain to use, instead we have another wrapper around it
+
+import semverLessThan from 'semver/functions/lt.js'
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
 import APKMirrorScraper, { APKMirrorScraperOptions, ArchResolvable } from './APKMirrorScraper.js'
 
@@ -29,17 +32,22 @@ export default class AppPackageScraper {
 
         const versions = await this._scraper.fetchVersions(appCategory)
 
-        // * No need for sort, the utility function already sorted for us
-        return versions.filter(version => AppPackageScraper.excludableVersionsTitleList.some(
-            string => !version.title.toLowerCase().includes(string)
-        )).map(version => {
-            const title = version.title.toLowerCase()
-            return {
-                alpha: !!title.includes('alpha'),
-                beta: !!title.includes('beta'),
-                version: version.version
-            }
-        })
+        return versions.sort(
+            (a, b) => semverLessThan(this._fixVersion(a.version), this._fixVersion(b.version)) ? -1 : 1
+        )
+            .filter(version => 
+                AppPackageScraper.excludableVersionsTitleList.some(
+                    string => !version.title.toLowerCase().includes(string)
+                )
+            )
+            .map(version => {
+                const title = version.title.toLowerCase()
+                return {
+                    alpha: !!title.includes('alpha'),
+                    beta: !!title.includes('beta'),
+                    version: version.version
+                }
+            })
     }
 
     async fetchDownload(app: AppPackageScraperApp, version: string, arch?: ArchResolvable) {
@@ -57,6 +65,12 @@ export default class AppPackageScraper {
 
     private _isApp(entry: keyof typeof AppPackageScraperApp, value: AppPackageScraperApp) {
         return AppPackageScraperApp[entry] === value
+    }
+
+    private _fixVersion(string: string) {
+        return string.replace(/\.0([0-9]+)/g, '.$1')
+            .replace(/^([0-9]+\.[0-9]+)(?:.*)$/, '$1.0')
+            .replace(/^([0-9]+)(?:.*)$/, '$1.0.0')
     }
 }
 
