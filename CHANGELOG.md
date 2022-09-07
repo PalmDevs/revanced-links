@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/PalmDevs/revanced-links/compare/v1.0.0...v1.0.1) (2022-09-07)
+
+
+### Bug Fixes
+
+* add more validators for RepositoryFetcher ([c1fe645](https://github.com/PalmDevs/revanced-links/commit/c1fe6453812a28d1df0eb61a8145237141fc8a68))
+* bad typed options for ReVancedFetcher ([7d00c55](https://github.com/PalmDevs/revanced-links/commit/7d00c550d8442142a24b870ddc25b4bc31bf68be))
+
 # 1.0.0 (2022-09-06)
 
 
