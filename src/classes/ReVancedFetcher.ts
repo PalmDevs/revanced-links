@@ -20,9 +20,9 @@ export default class ReVancedFetcher {
      */
     constructor(options: ReVancedFetcherOptions) {
         this._options = options
-        this.patches = new ReVancedPatchesFetcher(this._options.gitHubSettings)
-        this.integrations = new ReVancedIntegrationsFetcher(this._options.gitHubSettings)
-        this.cli = new ReVancedCLIFetcher(this._options.gitHubSettings)
+        this.patches = new ReVancedPatchesFetcher({ ...this._options })
+        this.integrations = new ReVancedIntegrationsFetcher({ ...this._options })
+        this.cli = new ReVancedCLIFetcher({ ...this._options })
     }
 
     /**
@@ -40,4 +40,4 @@ export default class ReVancedFetcher {
     }
 }
 
-export type ReVancedFetcherOptions = Omit<ReVancedLinksOptions, 'arch'>
+export type ReVancedFetcherOptions = ReVancedLinksOptions['gitHubSettings']

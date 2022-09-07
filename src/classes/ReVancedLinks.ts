@@ -13,7 +13,7 @@ export default class ReVancedLinks {
      */
     constructor(options: ReVancedLinksOptions = {}) {
         this._options = options
-        this.revanced = new ReVancedFetcher(this._options)
+        this.revanced = new ReVancedFetcher(this._options.gitHubSettings)
         this.packages = new AppPackageFetcher(this._options.appFetcherSettings)
     }
 }
