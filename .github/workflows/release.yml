@@ -31,7 +31,7 @@ jobs:
         run: npm run compile
         
       - name: Setup semantic-release
-        run: npm install -g semantic-release @semantic-release/changelog -D
+        run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git -D
 
       - name: Release
         env:
