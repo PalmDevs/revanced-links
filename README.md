@@ -128,10 +128,11 @@ When there are scripts, there are productivity. Here's a list of scripts you sho
 **Note**: Anything ending in `:nc` means no-cleanup, this usually results in junk files and possibly weird errors.
   - `watch`, `start`, `start:nc`: Starts the development environment, your code will automatically compile on save
   - `compile`, `compile:nc`: Only compiles the code, doesn't make documentation
+  - `compile:esm`, `compile:cjs`: Please do **NOT** run this, use the above compilation scripts instead, other scripts already run this by default
   - `docs`, `docs:nc`: Only makes documentation, doesn't compile code
+  - `build`, `build:nc`: Builds both documentation and distribution
   - `cleanup`: This script is ran by other scripts, but this deletes `dist/` and `docs/`
   - `cleanup:d`, `cleanup:c`: This script is ran by other scripts, but `:d` deletes `docs/` and `:c` deletes `dist/`
-  - `build`, `build:nc`: Builds both documentation and distribution
 
 ### You're ready!
 You're ready to be cool like a hackerman. 😎  

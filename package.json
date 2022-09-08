@@ -3,11 +3,12 @@
   "version": "1.0.2",
   "description": "A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "type": "module",
   "exports": {
-    "import": "./dist/index.js",
-    "types": "./dist/index.d.ts"
+    "require": "./dist/cjs/index.js",
+    "import": "./dist/esm/index.js",
+    "types": "./dist/types/index.d.ts"
   },
   "files": [
     "dist"
@@ -22,7 +23,9 @@
     "build": "npm run cleanup && npm run build:nc",
     "build:nc": "npm run compile:nc && npm run docs:nc",
     "compile": "npm run cleanup:c && npm run compile:nc",
-    "compile:nc": "tsc",
+    "compile:nc": "npm run compile:esm && npm run compile:cjs",
+    "compile:esm": "tsc --outDir dist/esm --module esnext",
+    "compile:cjs": "tsc --outDir dist/cjs --module commonjs",
     "docs": "npm run cleanup:d && npm run docs:nc",
     "docs:nc": "typedoc --out docs src/index.ts"
   },
