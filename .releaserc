@@ -7,7 +7,21 @@
     }
   ],
   "plugins": [
-    "@semantic-release/commit-analyzer",
+    [
+      "@semantic-release/commit-analyzer", 
+      {
+        "releaseRules": [
+          { "type": "docs", "release": "patch" },
+          { "type": "style", "release": false },
+          { "type": "refactor", "release": "patch" },
+          { "type": "workflow", "release": false },
+          { "type": "test", "release": "patch" },
+          { "type": "chore", "release": "patch" },
+          { "type": "BREAKING", "release": "major" },
+          { "type": "!!!", "release": "major" }
+        ]
+      }
+    ],
     "@semantic-release/release-notes-generator",
     "@semantic-release/changelog",
     [
