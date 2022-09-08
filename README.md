@@ -35,11 +35,11 @@ yarn add revanced-links
 ```
 
 ## Getting Started
-Here's example snippets for you to get started.  
+Here are some example snippets for you to get started.  
 If you want the full documentation, please refer to [here](https://palmdevs.github.io/revanced-links/) instead.
 
 ### Get essentials for patching YouTube
-
+Fetches releases from revanced-owned repositories, and scrapes the YouTube app from APKMirror.
 ```js
 import { ReVancedLinks, App } from 'revanced-links'
 
@@ -65,7 +65,7 @@ console.log('Latest YouTube package:', youtube)
 ```
 
 ### Get latest patchable app packages
-
+Scrapes all patchable apps from APKMirror.
 ```js
 import { AppPackageFetcher, App } from 'revanced-links'
 
@@ -88,7 +88,7 @@ console.log('YouTube Music: ', links.YouTubeMusic)
 ```
 
 ### Scrape unrelated app packages (BETA, may not work with some apps)
-
+Scrape any other packages from APKMirror.
 ```js
 import { APKMirrorScraper } from 'revanced-links'
 
@@ -96,17 +96,18 @@ const ams = new APKMirrorScraper({
     arch: 'arm64-v8a'
 })
 
+// WARNING: This fetches using app routes, no intended support for app categories yet
 const gWalletDownloadUrl = ams.fetchDownload('google-inc/google-wallet', '2.153.469766798')
 console.log(gWalletDownloadUrl)
 ```
 
 ## Contribute
-To contribute, fork the `main` branch and then make a pull request.  
+To contribute, fork the `main` (or `dev`) branch and then make a pull request.  
 Please note that some pull requests may not be merged/rebased. Don't be mad about it, other people get that too.
 
 ### Setting up the environment
 Make sure these are installed:
- - **Node v18.x.x**
+ - **Node LATEST (NOT LTS)**
  - **Git**
  - Preferably VSCode (but you can use other editors)
  - GitHub Desktop (if you need it)
@@ -115,7 +116,7 @@ To clone this repository, you could use GitHub Desktop, or `git` in command-line
 ```sh
 git clone https://github.com/PalmDevs/revanced-links
 ```
-Then you'll need to install libraries
+Then you'll need to install the development libraries
 ```sh
 npm install
 # or if you use yarn
@@ -124,7 +125,7 @@ yarn install
 
 ### Scripts
 When there are scripts, there are productivity. Here's a list of scripts you should know about.  
-**Note**: Anything ending in `:nc` means no-cleanup, this usually results in junk files and weird errors.
+**Note**: Anything ending in `:nc` means no-cleanup, this usually results in junk files and possibly weird errors.
   - `watch`, `start`, `start:nc`: Starts the development environment, your code will automatically compile on save
   - `compile`, `compile:nc`: Only compiles the code, doesn't make documentation
   - `docs`, `docs:nc`: Only makes documentation, doesn't compile code
@@ -138,4 +139,4 @@ Now you can brag to your non-programmer friends about it!
 
 ## Discussions
 We have a Discord server for [NRVM builder](https://github.com/PalmDevs/nrvm) which is closely related to this project.  
-You could join it with this [link](), there is a channel called **#revanced-links-discussions** specifically made for this purpose.
+You could join it with this [link](https://discord.gg/mHq2bTfeSa), there is a channel called **#revanced-links-discussions** specifically made for this purpose.
