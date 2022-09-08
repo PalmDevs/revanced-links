@@ -1,3 +1,5 @@
+# [2.0.0](https://github.com/PalmDevs/revanced-links/compare/v1.0.1...v2.0.0) (2022-09-08)
+
 ## [1.0.1](https://github.com/PalmDevs/revanced-links/compare/v1.0.0...v1.0.1) (2022-09-07)
 
 
