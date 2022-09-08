@@ -17,8 +17,7 @@
           { "type": "workflow", "release": false },
           { "type": "test", "release": "patch" },
           { "type": "chore", "release": "patch" },
-          { "type": "BREAKING", "release": "major" },
-          { "type": "!!!", "release": "major" }
+          { "type": "BREAKING", "release": "major" }
         ]
       }
     ],
