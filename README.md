@@ -1,6 +1,5 @@
 # ReVanced Links
 A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror.  
-**THIS MODULE ONLY SUPPORTS ESM!** You could try compiling this to CommonJS yourself. There will be an official support soon.
 
 <details><summary><strong>Table of contents</strong></summary>
 
@@ -23,6 +22,7 @@ A library to fetch latest ReVanced essentials and scrape app packages supported 
  - Feature-rich
  - Fast and efficient
  - Object-oriented
+ - **Supports both ESM and CJS**
  - **ALL** Promise-based
  - [Documentation](https://palmdevs.github.io/revanced-links)
 
