@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/PalmDevs/revanced-links/compare/v1.0.2...v1.1.0) (2022-09-08)
+
+
+### Features
+
+* CJS support ([bbc0699](https://github.com/PalmDevs/revanced-links/commit/bbc06995e3728c634a8a8c52e7f6da422a447f21))
+
 ## [1.0.2](https://github.com/PalmDevs/revanced-links/compare/v1.0.1...v1.0.2) (2022-09-08)
 
 
