@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/PalmDevs/revanced-links/compare/v1.1.1...v1.1.2) (2022-09-09)
+
+
+### Bug Fixes
+
+* invalid arch on fetchDownload() ([2c1bb5c](https://github.com/PalmDevs/revanced-links/commit/2c1bb5c72ea7a98b9705a54aa8ce165b87f67c31))
+
 ## [1.1.1](https://github.com/PalmDevs/revanced-links/compare/v1.1.0...v1.1.1) (2022-09-08)
 
 # [1.1.0](https://github.com/PalmDevs/revanced-links/compare/v1.0.2...v1.1.0) (2022-09-08)
