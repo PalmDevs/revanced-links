@@ -1,7 +1,7 @@
 import colors from 'ansi-colors'
 import fs from 'fs'
 import path from 'path'
-import { exitWithError, optionExists } from './_checkEnv.js'
+import { exitWithError, optionExists } from './util.js'
 
 const distPath = path.join(process.cwd(), 'dist')
 const docsPath = path.join(process.cwd(), 'docs')

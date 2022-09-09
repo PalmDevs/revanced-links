@@ -20,14 +20,14 @@
     "cleanup": "node ./scripts/cleanup --docs --dist",
     "cleanup:d": "node ./scripts/cleanup --docs",
     "cleanup:c": "node ./scripts/cleanup --dist",
-    "build": "node ./scripts/compile --esm --cjs --types && node ./scripts/generate-docs --cleanup",
-    "build:nc": "node ./scripts/compile --esm --cjs --types && node ./scripts/generate-docs",
-    "compile": "node ./scripts/compile --esm --cjs --types --cleanup",
+    "build": "npm run cleanup --docs --dist && npm run build:nc",
+    "build:nc": "npm run compile:nc && npm run docs:nc",
+    "compile": "npm run cleanup --dist && npm run compile:nc",
     "compile:nc": "node ./scripts/compile --esm --cjs --types",
     "compile:esm": "node ./scripts/compile --esm",
     "compile:cjs": "node ./scripts/compile --cjs",
     "compile:types": "node ./scripts/compile --types",
-    "docs": "node ./scripts/generate-docs --cleanup",
+    "docs": "npm run cleanup --docs && npm run docs:nc",
     "docs:nc": "node ./scripts/generate-docs"
   },
   "repository": {

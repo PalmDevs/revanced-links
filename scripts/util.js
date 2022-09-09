@@ -1,4 +1,5 @@
 import colors from 'ansi-colors'
+import { spawn } from 'child_process'
 import path from 'path'
 
 const endsWithSlashScripts = new RegExp(`${path.delimiter}scripts$`)
