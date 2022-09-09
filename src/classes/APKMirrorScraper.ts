@@ -106,12 +106,13 @@ export default class APKMirrorScraper {
      * const url = await ams.fetchDownload('youtube-music', '5.23.50')
      */
     async fetchDownload(appRoute: string, version: string, arch?: ArchResolvable) {
+        const actualArch = arch || this._options.arch
+
         // @Validate
         this._checkMatch(appRoute, 'appRoute', APP_ROUTE_REGEX)
         this._checkMatch(version, 'version', EXTENDED_SEMVER_REGEX)
-        this._checkMatch(arch, 'arch', ARCH_REGEX)
+        this._checkMatch(actualArch, 'arch', ARCH_REGEX)
 
-        const actualArch = arch || this._options.arch
         // * APKMirror URLs uses dashes instead of dots
         const urlVersion = version.replaceAll('.', '-')
         // * The split-repeating part is required due to APKMirror link formats being... weird
