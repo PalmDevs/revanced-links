@@ -32,7 +32,7 @@
       {
         "changelogTitle": "Changelogs"
       }
-    ]
+    ],
     [
       "@semantic-release/npm",
       {
