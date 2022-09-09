@@ -12,17 +12,27 @@
       {
         "releaseRules": [
           { "type": "docs", "release": "patch" },
-          { "type": "style", "release": false },
           { "type": "refactor", "release": "patch" },
-          { "type": "workflow", "release": false },
-          { "type": "test", "release": "patch" },
           { "type": "chore", "release": "patch" },
+          
+          { "type": "style", "release": false },
+          { "type": "workflow", "release": false },
+          { "type": "wf", "release": false },
+          { "type": "ci", "release": false },
+          { "type": "test", "release": false },
+          { "type": "tests", "release": false },
+          
           { "type": "BREAKING", "release": "major" }
         ]
       }
     ],
     "@semantic-release/release-notes-generator",
-    "@semantic-release/changelog",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogTitle": "Changelogs"
+      }
+    ]
     [
       "@semantic-release/npm",
       {
