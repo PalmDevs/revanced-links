@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/PalmDevs/revanced-links/compare/v1.1.2...v1.1.3) (2022-09-09)
+
+
+### Bug Fixes
+
+* **APKMirrorScraper:** never default to other archs ([47539bf](https://github.com/PalmDevs/revanced-links/commit/47539bf4f2cc50e84613fa3999c5a9ca659c18f2))
+
 ## [1.1.2](https://github.com/PalmDevs/revanced-links/compare/v1.1.1...v1.1.2) (2022-09-09)
 
 
