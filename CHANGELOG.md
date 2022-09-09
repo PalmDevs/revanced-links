@@ -1,3 +1,7 @@
+Changelogs
+
+## [1.1.4](https://github.com/PalmDevs/revanced-links/compare/v1.1.3...v1.1.4) (2022-09-09)
+
 ## [1.1.3](https://github.com/PalmDevs/revanced-links/compare/v1.1.2...v1.1.3) (2022-09-09)
 
 
