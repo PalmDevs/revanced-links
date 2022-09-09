@@ -142,13 +142,6 @@ export default class APKMirrorScraper {
                 .children('a[class="accent_color"]')
                 .first()
                 .attr('href')
-        ??
-            $('span[class="apkm-badge"]')
-                .first()
-                .parent()
-                .children('a[class="accent_color"]')
-                .first()
-                .attr('href')
 
         if (!href) throw new APKMirrorScraperError('INVALID_WEB_FORMAT')
 
