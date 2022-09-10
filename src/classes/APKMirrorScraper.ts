@@ -5,7 +5,6 @@
 
 import { load } from 'cheerio'
 import { Element, Text, ChildNode } from 'domhandler'
-import fetch, { Response } from 'node-fetch'
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
 import { isNotEmptyArray } from '../util/Validator.js'
 
