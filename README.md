@@ -1,10 +1,12 @@
 # ReVanced Links
 A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror.  
+**Please read the [cons](#cons) before using this library!**
 
 <details><summary><strong>Table of contents</strong></summary>
 
 - [ReVanced Links](#revanced-links)
   - [Features](#features)
+  - [Cons](#cons)
   - [Installation](#installation)
   - [Getting Started](#getting-started)
     - [Get essentials for patching YouTube](#get-essentials-for-patching-youtube)
@@ -25,6 +27,10 @@ A library to fetch latest ReVanced essentials and scrape app packages supported 
  - **Supports both ESM and CJS**
  - **ALL** Promise-based
  - [Documentation](https://palmdevs.github.io/revanced-links)
+
+## Cons
+ - Only supports **Node.js v18.x.x+** *(or [any environment](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#browser_compatibility) that has native `fetch()`)*
+ - Node.js may emit experimental warnings, because `fetch()` is experimental, but it works
 
 ## Installation
 Head to your terminal and install the package
@@ -107,7 +113,7 @@ Please note that some pull requests may not be merged/rebased. Don't be mad abou
 
 ### Setting up the environment
 Make sure these are installed:
- - **Node LATEST (NOT LTS)**
+ - **Node.js LATEST (NOT LTS)**
  - **Git**
  - Preferably VSCode (but you can use other editors)
  - GitHub Desktop (if you need it)
