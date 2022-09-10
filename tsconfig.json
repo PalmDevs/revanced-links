@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ESNext",
     "experimentalDecorators": true,
 
-    "module": "ESNext",
+    "module": "ES2022",
     "moduleResolution": "NodeNext",
 
+    "baseUrl": ".",
     "rootDir": "./src",
     "removeComments": false,
     "importsNotUsedAsValues": "remove",
