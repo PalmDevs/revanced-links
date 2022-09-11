@@ -12,6 +12,7 @@ A library to fetch latest ReVanced essentials and scrape app packages supported 
     - [Scrape unrelated app packages (BETA)](#scrape-unrelated-app-packages-beta)
   - [Contribute](#contribute)
     - [Setting up the environment](#setting-up-the-environment)
+      - [Update your environment variables](#update-your-environment-variables)
     - [Scripts](#scripts)
     - [You're ready!](#youre-ready)
   - [Discussions](#discussions)
@@ -108,6 +109,8 @@ npm install
 # or if you use yarn
 yarn install
 ```
+#### Update your environment variables
+See the `.env.example` file for more information
 
 ### Scripts
 When there are scripts, there are productivity. Here's a list of scripts you should know about.  
