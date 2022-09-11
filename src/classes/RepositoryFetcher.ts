@@ -10,6 +10,7 @@ export default class RepositoryFetcher {
     protected readonly _options: RepositoryFetcherOptions & { dataPerPage: number }
 
     /**
+     * Fetches releases from the specified repository.
      * @param options Configurations and options
      * @example
      * import { RepositoryFetcher } from 'revanced-links'
@@ -36,7 +37,7 @@ export default class RepositoryFetcher {
     }
 
     /**
-     * Fetches releases from the repository
+     * Fetches releases from the repository.
      * @param page The page number to fetch
      * @returns An array of releases object
      * @example
@@ -63,7 +64,7 @@ export default class RepositoryFetcher {
     }
 
     /**
-     * Fetches the latest release from the repository
+     * Fetches the latest release from the repository.
      * @returns A release object
      * @example
      * import { RepositoryFetcher } from 'revanced-links'

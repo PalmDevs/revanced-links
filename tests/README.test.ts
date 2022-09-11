@@ -4,44 +4,36 @@ import { expect } from 'expect'
 import { test } from 'uvu'
 import { ReVancedLinks, App, AppPackageFetcher, APKMirrorScraper } from '../src/index.js'
 
-test('fetches latest essentials for patching YouTube', async () => {
+test('get essentials from GitHub', async () => {
     const rl = new ReVancedLinks({
         appFetcherSettings: {
             arch: 'arm64-v8a'
         },
         gitHubSettings: {
-            apiKey: process.env.GITHUB_KEY,
+            apiKey: 'secret123',
             dataPerPage: 10,
         }
     })
 
     const { patches, integrations, cli } = await rl.revanced.fetchLatestReleases()
-    const youtube = await rl.packages.fetchLatestRelease(App.YouTube)
+    const microG = await rl.microg.fetchLatestRelease()
 
-    expect([ patches, integrations, cli ].every(
+    expect([ patches, integrations, cli, microG ].every(
         (links) => Array.isArray(links) ? 
             links.every(url => typeof url === 'string') :
             Object.keys(links).every(key => typeof links[key] === 'string')
     )).toBe(true)
-
-    expect(typeof youtube).toBe('string')
 })
 
-test('scrapes patchable apps', async () => {
+test('get YouTube and YouTube Music downloads', async () => {
     const apf = new AppPackageFetcher({
         arch: 'arm64-v8a'
     })
 
-    const appIDs = [App.YouTube, App.YouTubeMusic, App.Twitter, App.Reddit, App.WarnWetter, App.TikTok]
-    const linkEntries = await Promise.all(appIDs.map(
-        async (id) => {
-            return [App[id], await apf.fetchLatestRelease(id)]
-        }
-    ))
+    const yt = await apf.fetchLatestStableRelease(App.YouTube)
+    const ytm = await apf.fetchLatestStableRelease(App.YouTubeMusic)
 
-    const links = Object.fromEntries(linkEntries) as { [K in Exclude<keyof typeof App, number>]: string }
-
-    expect(Object.entries(links).every(([ key, value]) => typeof App[key] === 'number' && typeof value === 'string'))
+    expect([ yt, ytm ].every(url => typeof url === 'string')).toBe(true)
 })
 
 test('scrapes unrelated packages', async () => {

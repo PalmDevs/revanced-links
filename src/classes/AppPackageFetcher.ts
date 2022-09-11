@@ -10,7 +10,7 @@ export default class AppPackageFetcher {
     private readonly _scraper: AppPackageScraper
 
     /**
-     * Fetches a ReVanced-support app package download URL
+     * Fetches a ReVanced-support app package download URL.
      * @param options Configurations and options
      * @example
      * import { AppPackageFetcher } from 'revanced-links'
@@ -25,7 +25,7 @@ export default class AppPackageFetcher {
     }
 
     /**
-     * Fetches the latest version available
+     * Fetches the latest version available.
      * @param app The app to fetch 
      * @returns App version data
      * @example
@@ -40,7 +40,7 @@ export default class AppPackageFetcher {
     }
 
     /**
-     * Fetches the latest stable *(non-beta, non-alpha)* version available
+     * Fetches the latest stable *(non-beta, non-alpha)* version available.
      * @param app The app to fetch 
      * @returns App version data
      * @example
@@ -55,7 +55,7 @@ export default class AppPackageFetcher {
     }
 
     /**
-     * Fetches a download URL for the latest version of an app package
+     * Fetches a download URL for the latest version of an app package.
      * @param app The app to fetch 
      * @returns A download URL
      * @example
@@ -69,7 +69,7 @@ export default class AppPackageFetcher {
     }
 
     /**
-     * Fetches a download URL for the latest stable *(non-beta, non-alpha)* version of an app package
+     * Fetches a download URL for the latest stable *(non-beta, non-alpha)* version of an app package.
      * @param app The app to fetch 
      * @returns A download URL
      * @example
@@ -83,7 +83,7 @@ export default class AppPackageFetcher {
     }
 
     /**
-     * Fetches available app versions
+     * Fetches available app versions.
      * @param app The app to fetch 
      * @returns An array of app version data
      * @example
@@ -97,7 +97,7 @@ export default class AppPackageFetcher {
     }
 
     /**
-     * Fetches a download URL for an app with a specific version
+     * Fetches a download URL for an app with a specific version.
      * @param app The app to fetch
      * @param version A version of the app to fetch
      * @returns A download URL

@@ -7,11 +7,12 @@ A library to fetch latest ReVanced essentials and scrape app packages supported 
   - [Features](#features)
   - [Installation](#installation)
   - [Getting Started](#getting-started)
-    - [Get essentials for patching YouTube](#get-essentials-for-patching-youtube)
-    - [Get latest patchable app packages](#get-latest-patchable-app-packages)
+    - [Get essentials from GitHub](#get-essentials-from-github)
+    - [Get YouTube and YouTube Music downloads](#get-youtube-and-youtube-music-downloads)
     - [Scrape unrelated app packages (BETA)](#scrape-unrelated-app-packages-beta)
   - [Contribute](#contribute)
     - [Setting up the environment](#setting-up-the-environment)
+      - [Update your environment variables](#update-your-environment-variables)
     - [Scripts](#scripts)
     - [You're ready!](#youre-ready)
   - [Discussions](#discussions)
@@ -38,8 +39,7 @@ yarn add revanced-links
 Here are some example snippets for you to get started.  
 If you want the full documentation, please refer to [here](https://palmdevs.github.io/revanced-links/) instead.
 
-### Get essentials for patching YouTube
-Fetches releases from revanced-owned repositories, and scrapes the YouTube app from APKMirror.
+### Get essentials from GitHub
 ```js
 import { ReVancedLinks, App } from 'revanced-links'
 
@@ -55,17 +55,12 @@ const rl = new ReVancedLinks({
 })
 
 const { patches, integrations, cli } = await rl.revanced.fetchLatestReleases()
-const youtube = await rl.packages.fetchLatestRelease(App.YouTube)
+const microG = await rl.microg.fetchLatestRelease()
 
-// Do something with the URLs
-console.log('Patches assets:', patches)
-console.log('Integration assets:', integrations)
-console.log('CLI assets:', cli)
-console.log('Latest YouTube package:', youtube)
+// Do something with the URLs below...
 ```
 
-### Get latest patchable app packages
-Scrapes all patchable apps from APKMirror.
+### Get YouTube and YouTube Music downloads
 ```js
 import { AppPackageFetcher, App } from 'revanced-links'
 
@@ -73,22 +68,13 @@ const apf = new AppPackageFetcher({
     arch: 'arm64-v8a'
 })
 
-const appIDs = [App.YouTube, App.YouTubeMusic, App.Twitter, App.Reddit, App.WarnWetter, App.TikTok]
-const linkEntries = await Promise.all(appIDs.map(
-    async (id) => {
-        return [App[id], await apf.fetchLatestRelease(id)]
-    }
-))
+const yt = await apf.fetchLatestStableRelease(App.YouTube)
+const ytm = await apf.fetchLatestStableRelease(App.YouTubeMusic)
 
-const links = Object.fromEntries(linkEntries) as { [K in Exclude<keyof typeof App, number>]: string }
-
-console.log('YouTube: ', links.YouTube)
-console.log('YouTube Music: ', links.YouTubeMusic)
 // ...
 ```
 
 ### Scrape unrelated app packages (BETA)
-Scrape any other packages from APKMirror.
 ```js
 import { APKMirrorScraper } from 'revanced-links'
 
@@ -97,17 +83,18 @@ const ams = new APKMirrorScraper({
 })
 
 // WARNING: This fetches using app routes, no intended support for app categories yet
-const downloadURL = await ams.fetchDownload('google-inc/google-opinion-rewards', '2022082901')
-console.log(downloadURL)
+const url = await ams.fetchDownload('google-inc/google-opinion-rewards', '2022082901')
+
+// ...
 ```
 
 ## Contribute
-To contribute, fork the `main` (or `dev`) branch and then make a pull request.  
-Please note that some pull requests may not be merged/rebased. Don't be mad about it, other people get that too.
+To contribute, fork the `main` branch and then make a pull request.  
+Please note that some pull requests may not be merged.
 
 ### Setting up the environment
 Make sure these are installed:
- - **Node.js Latest (18.x.x, NOT LTS)**
+ - **Node.js Latest (18.x.x as of today)**
  - **Git**
  - IDE
  - GitHub Desktop (if you need it)
@@ -122,6 +109,8 @@ npm install
 # or if you use yarn
 yarn install
 ```
+#### Update your environment variables
+See the `.env.example` file for more information
 
 ### Scripts
 When there are scripts, there are productivity. Here's a list of scripts you should know about.  
@@ -131,7 +120,6 @@ When there are scripts, there are productivity. Here's a list of scripts you sho
   - `docs`, `docs:nc`: Only makes documentation, doesn't compile code
   - `build`, `build:nc`: Builds both documentation and distribution
   - `cleanup`: This script is ran by other scripts, but this deletes `dist/` and `docs/`
-  - `cleanup:d`, `cleanup:c`: This script is ran by other scripts, but `:d` deletes `docs/` and `:c` deletes `dist/`
   - `test`: Just tests the whole library
 
 ### You're ready!

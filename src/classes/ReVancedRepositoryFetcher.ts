@@ -4,7 +4,7 @@ import RepositoryFetcher from './RepositoryFetcher.js'
 export default class ReVancedRepositoryFetcher extends RepositoryFetcher {
 
     /**
-     * Fetches releases from ReVanced-owned repositories
+     * Fetches releases from ReVanced-owned repositories.
      * @param options Configurations and options
      * @example
      * import { ReVancedRepositoryFetcher } from 'revanced-links'
@@ -24,7 +24,7 @@ export class ReVancedPatchesFetcher {
     private readonly _fetcher: ReVancedRepositoryFetcher
 
     /**
-     * Fetches releases from the `revanced-patches` repository
+     * Fetches releases from the `revanced-patches` repository.
      * @param options Configurations and options
      */
     constructor(options: ReVancedRepositoryFetcherChildrenOptions = {}) {
@@ -32,7 +32,7 @@ export class ReVancedPatchesFetcher {
     }
 
     /**
-     * Fetches releases from the `revanced-patches` repository
+     * Fetches releases from the `revanced-patches` repository.
      * @param page The page number to fetch
      * @returns An array of patches release assets objects
      */
@@ -42,7 +42,7 @@ export class ReVancedPatchesFetcher {
     }
 
     /**
-     * Fetches the latest release from the `revanced-patches` repository
+     * Fetches the latest release from the `revanced-patches` repository.
      * @returns A patches release asset object
      */
     async fetchLatestRelease(): Promise<ReVancedPatchesAssets> {
@@ -62,7 +62,7 @@ export class ReVancedCLIFetcher {
     private readonly _fetcher: ReVancedRepositoryFetcher
 
     /**
-     * Fetches releases from the `revanced-cli` repository
+     * Fetches releases from the `revanced-cli` repository.
      * @param options Configurations and options
      */
     constructor(options: ReVancedRepositoryFetcherChildrenOptions = {}) {
@@ -70,7 +70,7 @@ export class ReVancedCLIFetcher {
     }
 
     /**
-     * Fetches releases from the `revanced-cli` repository
+     * Fetches releases from the `revanced-cli` repository.
      * @param page The page number to fetch
      * @returns An array of CLI release assets download URL
      */
@@ -80,7 +80,7 @@ export class ReVancedCLIFetcher {
     }
 
     /**
-     * Fetches the latest release from the `revanced-cli` repository
+     * Fetches the latest release from the `revanced-cli` repository.
      * @returns CLI release assets download URL
      */
     async fetchLatestRelease(): Promise<string[]> {
@@ -93,7 +93,7 @@ export class ReVancedIntegrationsFetcher {
     private readonly _fetcher: ReVancedRepositoryFetcher
 
     /**
-     * Fetches releases from the `revanced-integrations` repository
+     * Fetches releases from the `revanced-integrations` repository.
      * @param options Configurations and options
      */
     constructor(options: ReVancedRepositoryFetcherChildrenOptions = {}) {
@@ -101,7 +101,7 @@ export class ReVancedIntegrationsFetcher {
     }
 
     /**
-     * Fetches releases from the `revanced-integrations` repository
+     * Fetches releases from the `revanced-integrations` repository.
      * @param page The page number to fetch
      * @returns An array of integrations release assets download URL
      */
@@ -111,7 +111,7 @@ export class ReVancedIntegrationsFetcher {
     }
 
     /**
-     * Fetches the latest release from the `revanced-integrations` repository
+     * Fetches the latest release from the `revanced-integrations` repository.
      * @returns Integrations release assets download URL
      */
     async fetchLatestRelease(): Promise<string[]> {
