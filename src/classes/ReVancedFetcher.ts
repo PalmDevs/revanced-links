@@ -8,7 +8,7 @@ export default class ReVancedFetcher {
     readonly cli: ReVancedCLIFetcher
 
     /**
-     * Fetches ReVanced essentials releases
+     * Fetches ReVanced essentials releases.
      * @param options Configurations and options
      * @example
      * import { ReVancedFetcher } from 'revanced-downloads-links'
@@ -26,7 +26,7 @@ export default class ReVancedFetcher {
     }
 
     /**
-     * Fetches the latest release of ReVanced essentials
+     * Fetches the latest release of ReVanced essentials.
      * @returns An object with values containing asset releases
      * @example
      * import { ReVancedFetcher } from 'revanced-downloads-links'

@@ -22,7 +22,7 @@ export default class APKMirrorScraper {
     private readonly _options: Required<APKMirrorScraperOptions>
 
     /**
-     * Fetches and scrapes various information from APKMirror
+     * Fetches and scrapes various information from APKMirror.
      * @param options Configurations and options
      * @example
      * import { APKMirrorScraper } from 'revanced-links'
@@ -41,8 +41,8 @@ export default class APKMirrorScraper {
     }
 
     /**
-     * Fetches versions for a specific app using an app category
-     * *An app category is almost-like the package name, each app must have a different package name*
+     * Fetches versions for a specific app using an app category.
+     * *An app category is almost-like the package name, each app must have a different package name.*
      * @param appCategory The app category to fetch
      * @returns App version data
      * @example
@@ -66,9 +66,9 @@ export default class APKMirrorScraper {
     }
 
     /**
-     * Fetches versions for a specific app using an app route
-     * *An app route is almost-like GitHub repository names, each user (publisher) cannot have the same route for different apps*
-     * *But, you can have the same route if the publisher is a different organization*
+     * Fetches versions for a specific app using an app route.
+     * *An app route is almost-like GitHub repository names, each user (publisher) cannot have the same route for different apps.*
+     * *But, you can have the same route if the publisher is a different organization.*
      * @param appRoute The app route to fetch
      * @returns App version data
      * @example
@@ -92,8 +92,8 @@ export default class APKMirrorScraper {
     }
 
     /**
-     * Fetches download URLs for an app using an app route
-     * *There is no confirmed support for app categories*
+     * Fetches download URLs for an app using an **app route**.
+     * *There is no confirmed support for app categories.*
      * @param appRoute The app route to fetch
      * @param version The version to fetch
      * @param arch Device architecture
@@ -231,7 +231,7 @@ export interface APKMirrorScraperAppVersion {
      */
     title: string
     /**
-     * Sanatized version, can be used with the `semver` package
+     * Sanatized version, can be used with the `semver` package for many operations
      */
     version: string
 }

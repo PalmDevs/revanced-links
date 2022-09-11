@@ -5,7 +5,7 @@ export default class MicroGFetcher {
     private readonly _fetcher: RepositoryFetcher
 
     /**
-     * Fetches releases from the `VancedMicroG` repository
+     * Fetches releases from the `VancedMicroG` repository.
      * @param options Configurations and options
      */
     constructor(options: MicroGFetcherOptions = {}) {
@@ -17,7 +17,7 @@ export default class MicroGFetcher {
     }
 
     /**
-     * Fetches releases from the `VancedMicroG` repository
+     * Fetches releases from the `VancedMicroG` repository.
      * @param page The page number to fetch
      * @returns An array of CLI release assets download URL
      */
@@ -27,7 +27,7 @@ export default class MicroGFetcher {
     }
 
     /**
-     * Fetches the latest release from the `VancedMicroG` repository
+     * Fetches the latest release from the `VancedMicroG` repository.
      * @returns CLI release assets download URL
      */
     async fetchLatestRelease(): Promise<string[]> {
