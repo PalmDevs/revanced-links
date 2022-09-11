@@ -7,7 +7,8 @@
 
 import semverLessThan from 'semver/functions/lt.js'
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
-import APKMirrorScraper, { APKMirrorScraperOptions, ArchResolvable } from './APKMirrorScraper.js'
+import APKMirrorScraper, { APKMirrorScraperOptions } from './APKMirrorScraper.js'
+import type { ArchResolvable } from './APKMirrorScraper.js'
 
 export default class AppPackageScraper {
     static readonly baseDomain = 'https://apkmirror.com'
