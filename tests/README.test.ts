@@ -18,13 +18,11 @@ test('get essentials from GitHub', async () => {
     const { patches, integrations, cli } = await rl.revanced.fetchLatestReleases()
     const microG = await rl.microg.fetchLatestRelease()
 
-    expect([ patches, integrations, cli ].every(
+    expect([ patches, integrations, cli, microG ].every(
         (links) => Array.isArray(links) ? 
             links.every(url => typeof url === 'string') :
             Object.keys(links).every(key => typeof links[key] === 'string')
     )).toBe(true)
-
-    expect(typeof microG).toBe('string')
 })
 
 test('get YouTube and YouTube Music downloads', async () => {
