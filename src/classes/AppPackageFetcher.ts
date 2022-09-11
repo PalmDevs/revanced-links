@@ -2,7 +2,8 @@
 // * So people don't go too low-level with it
 
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
-import AppPackageScraper, { AppPackageScraperApp as App, AppPackageScraperAppVersion, ArchResolvable } from './AppPackageScraper.js'
+import AppPackageScraper, { AppPackageScraperApp as App } from './AppPackageScraper.js'
+import type { AppPackageScraperAppVersion, ArchResolvable } from './AppPackageScraper.js'
 
 export default class AppPackageFetcher {
     private readonly _options: AppPackageFetcherOptions

@@ -1,9 +1,16 @@
-import AppPackageFetcher, { App, AppPackageFetcherOptions, AppVersion, ArchResolvable } from './classes/AppPackageFetcher.js'
-import RepositoryFetcher, { RepositoryFetcherOptions } from './classes/RepositoryFetcher.js'
-import ReVancedLinks, { ReVancedLinksOptions } from './classes/ReVancedLinks.js'
-import ReVancedFetcher, { ReVancedFetcherOptions } from './classes/ReVancedFetcher.js'
-import { ReVancedCLIFetcher, ReVancedIntegrationsFetcher, ReVancedPatchesFetcher, ReVancedPatchesAssets, ReVancedRepositoryFetcherChildrenOptions } from './classes/ReVancedRepositoryFetcher.js'
-import APKMirrorScraper, { APKMirrorScraperAppVersion, APKMirrorScraperOptions } from './classes/APKMirrorScraper.js'
+import AppPackageFetcher, { App } from './classes/AppPackageFetcher.js'
+import RepositoryFetcher from './classes/RepositoryFetcher.js'
+import ReVancedLinks from './classes/ReVancedLinks.js'
+import ReVancedFetcher from './classes/ReVancedFetcher.js'
+import { ReVancedCLIFetcher, ReVancedIntegrationsFetcher, ReVancedPatchesFetcher } from './classes/ReVancedRepositoryFetcher.js'
+import APKMirrorScraper from './classes/APKMirrorScraper.js'
+
+import type { AppPackageFetcherOptions, AppVersion, ArchResolvable } from './classes/AppPackageFetcher.js'
+import type { APKMirrorScraperAppVersion, APKMirrorScraperOptions } from './classes/APKMirrorScraper.js'
+import type { RepositoryFetcherOptions } from './classes/RepositoryFetcher.js'
+import type { ReVancedLinksOptions } from './classes/ReVancedLinks.js'
+import type { ReVancedFetcherOptions } from './classes/ReVancedFetcher.js'
+import type { ReVancedPatchesAssets, ReVancedRepositoryFetcherChildrenOptions } from './classes/ReVancedRepositoryFetcher.js'
 
 export { ReVancedLinks, ReVancedLinksOptions }
 export { APKMirrorScraper, APKMirrorScraperOptions, APKMirrorScraperAppVersion }

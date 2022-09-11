@@ -9,6 +9,9 @@ import fetch, { Response } from 'node-fetch'
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
 import { isNotEmptyArray } from '../util/Validator.js'
 
+export const REQUEST_HEADERS = {
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
+}
 export const EXTENDED_SEMVER_REGEX = /(?:.*?)((?:(?:[0-9]+)(?:\.[0-9]+)*(?:\-[a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*)*)(?: +\- +[a-zA-Z0-9]+)?)/gi
 export const ARCH_REGEX = /^arm64-v8a|armeabi-v7a|x86_64|x84$/
 export const APP_CATEGORY_REGEX = /^[a-zA-Z-]+$/
@@ -54,9 +57,7 @@ export default class APKMirrorScraper {
 
         const url = `${APKMirrorScraper.baseDomain}/uploads/?appcategory=${appCategory}`
         const response = await fetch(url, {
-            headers: {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'
-            }
+            headers: REQUEST_HEADERS
         })
 
         this._checkRequest(response)
@@ -82,9 +83,7 @@ export default class APKMirrorScraper {
 
         const url = `${APKMirrorScraper.baseDomain}/apk/${appRoute}`
         const response = await fetch(url, {
-            headers: {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'
-            }
+            headers: REQUEST_HEADERS
         })
 
         this._checkRequest(response)
@@ -118,9 +117,7 @@ export default class APKMirrorScraper {
         // * The split-repeating part is required due to APKMirror link formats being... weird
         const url = `${APKMirrorScraper.baseDomain}/apk/${this._appendVersioning(`${appRoute}/${appRoute.split('/').at(-1)}`, urlVersion)}`
         const response = await fetch(url, {
-            headers: {
-                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'
-            }
+            headers: REQUEST_HEADERS
         })
 
         const $ = load(await this._responseToText(response))
