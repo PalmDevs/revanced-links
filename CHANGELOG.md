@@ -1,5 +1,12 @@
 Changelogs
 
+# [1.2.0](https://github.com/PalmDevs/revanced-links/compare/v1.1.5...v1.2.0) (2022-09-11)
+
+
+### Features
+
+* MicroG fetching support ([a24f6d5](https://github.com/PalmDevs/revanced-links/commit/a24f6d50cfea51e1daccde1c3d15bb38c4873d70))
+
 ## [1.1.5](https://github.com/PalmDevs/revanced-links/compare/v1.1.4...v1.1.5) (2022-09-11)
 
 ## [1.1.4](https://github.com/PalmDevs/revanced-links/compare/v1.1.3...v1.1.4) (2022-09-09)
