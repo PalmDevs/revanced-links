@@ -1,5 +1,5 @@
 # ReVanced Links
-A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror.  
+A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror.
 
 <details><summary><strong>Table of contents</strong></summary>
 
@@ -9,7 +9,7 @@ A library to fetch latest ReVanced essentials and scrape app packages supported 
   - [Getting Started](#getting-started)
     - [Get essentials for patching YouTube](#get-essentials-for-patching-youtube)
     - [Get latest patchable app packages](#get-latest-patchable-app-packages)
-    - [Scrape unrelated app packages (BETA, may not work with some apps)](#scrape-unrelated-app-packages-beta-may-not-work-with-some-apps)
+    - [Scrape unrelated app packages (BETA)](#scrape-unrelated-app-packages-beta)
   - [Contribute](#contribute)
     - [Setting up the environment](#setting-up-the-environment)
     - [Scripts](#scripts)
@@ -43,7 +43,7 @@ Fetches releases from revanced-owned repositories, and scrapes the YouTube app f
 ```js
 import { ReVancedLinks, App } from 'revanced-links'
 
-// All the options are optional
+// All these options are optional
 const rl = new ReVancedLinks({
     appFetcherSettings: {
         arch: 'arm64-v8a'
@@ -73,21 +73,21 @@ const apf = new AppPackageFetcher({
     arch: 'arm64-v8a'
 })
 
-const availableAppIDs = [App.Reddit, App.TikTok, App.Twitter, App.WarnWetter, App.YouTube, App.YouTubeMusic]
-const linkEntries = await Promise.all(availableAppIDs.map(
+const appIDs = [App.YouTube, App.YouTubeMusic, App.Twitter, App.Reddit, App.WarnWetter, App.TikTok]
+const linkEntries = await Promise.all(appIDs.map(
     async (id) => {
         return [App[id], await apf.fetchLatestRelease(id)]
     }
 ))
 
-const links = Object.fromEntries(linkEntries)
+const links = Object.fromEntries(linkEntries) as { [K in Exclude<keyof typeof App, number>]: string }
 
 console.log('YouTube: ', links.YouTube)
 console.log('YouTube Music: ', links.YouTubeMusic)
 // ...
 ```
 
-### Scrape unrelated app packages (BETA, may not work with some apps)
+### Scrape unrelated app packages (BETA)
 Scrape any other packages from APKMirror.
 ```js
 import { APKMirrorScraper } from 'revanced-links'
@@ -97,8 +97,8 @@ const ams = new APKMirrorScraper({
 })
 
 // WARNING: This fetches using app routes, no intended support for app categories yet
-const gWalletDownloadUrl = ams.fetchDownload('google-inc/google-wallet', '2.153.469766798')
-console.log(gWalletDownloadUrl)
+const downloadURL = await ams.fetchDownload('google-inc/google-opinion-rewards', '2022082901')
+console.log(downloadURL)
 ```
 
 ## Contribute
@@ -107,9 +107,9 @@ Please note that some pull requests may not be merged/rebased. Don't be mad abou
 
 ### Setting up the environment
 Make sure these are installed:
- - **Node LATEST (NOT LTS)**
+ - **Node.js Latest (18.x.x, NOT LTS)**
  - **Git**
- - Preferably VSCode (but you can use other editors)
+ - IDE
  - GitHub Desktop (if you need it)
 
 To clone this repository, you could use GitHub Desktop, or `git` in command-line
@@ -128,11 +128,11 @@ When there are scripts, there are productivity. Here's a list of scripts you sho
 **Note**: Anything ending in `:nc` means no-cleanup, this usually results in junk files and possibly weird errors.
   - `watch`, `start`, `start:nc`: Starts the development environment, your code will automatically compile on save
   - `compile`, `compile:nc`: Only compiles the code, doesn't make documentation
-  - `compile:esm`, `compile:cjs`: Please do **NOT** run this, use the above compilation scripts instead, other scripts already run this by default
   - `docs`, `docs:nc`: Only makes documentation, doesn't compile code
   - `build`, `build:nc`: Builds both documentation and distribution
   - `cleanup`: This script is ran by other scripts, but this deletes `dist/` and `docs/`
   - `cleanup:d`, `cleanup:c`: This script is ran by other scripts, but `:d` deletes `docs/` and `:c` deletes `dist/`
+  - `test`: Just tests the whole library
 
 ### You're ready!
 You're ready to be cool like a hackerman. 😎  
