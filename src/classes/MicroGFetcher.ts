@@ -10,8 +10,8 @@ export default class MicroGFetcher {
      */
     constructor(options: MicroGFetcherOptions = {}) {
         this._fetcher = new RepositoryFetcher({
-            repositoryName: 'TeamVanced',
-            repositoryOwner: 'VancedMicroG',
+            repositoryName: 'VancedMicroG',
+            repositoryOwner: 'TeamVanced',
             ...options
         })
     }
