@@ -8,7 +8,7 @@ const baseCommand = `npx tsc -p ${path.join(process.cwd(), 'tsconfig.json')}`
 const compileESM = optionExists(/^--esm|-e$/i)
 const genTypes = optionExists(/^--types|--type|-t$/i)
 
-const noGenerating = !compileCJS && !compileESM && !genTypes
+const noGenerating = !compileESM && !genTypes
 if (noGenerating) exitWithError('Nothing to generate, exiting')
 
 if (compileESM) {
