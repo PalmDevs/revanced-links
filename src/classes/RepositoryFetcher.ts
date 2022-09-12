@@ -106,11 +106,12 @@ export interface RepositoryFetcherOptions {
     repositoryName: string
     /**
      * GitHub API key
+     * @default undefined
      */
     apiKey?: string
     /**
-     * Amount of releases (data) per page
-     * GitHub uses pagination for their APIs
+     * Amount of releases per fetch, use `page` parameter to specify page to fetch
+     * @default 10
      */
     dataPerPage?: number
 }

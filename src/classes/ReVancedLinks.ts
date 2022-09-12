@@ -22,6 +22,12 @@ export default class ReVancedLinks {
 }
 
 export interface ReVancedLinksOptions {
+    /**
+     * Configuration for APKMirror scrapers
+     */
     appFetcherSettings?: AppPackageFetcherOptions
+    /**
+     * Configuration for repository fetchers
+     */
     gitHubSettings?: ReVancedRepositoryFetcherChildrenOptions
 }

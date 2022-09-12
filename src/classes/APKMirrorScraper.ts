@@ -221,6 +221,7 @@ export default class APKMirrorScraper {
 export interface APKMirrorScraperOptions {
     /**
      * Device architecture
+     * @default "arm64-v8a"
      */
     arch?: ArchResolvable
 }

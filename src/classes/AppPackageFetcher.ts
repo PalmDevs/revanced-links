@@ -137,6 +137,7 @@ export const AppPackageFetcherError = new CustomErrorConstructor(Error, AppPacka
 export interface AppPackageFetcherOptions {
     /**
      * Device architecture
+     * @default "arm64-v8a"
      */
     arch?: ArchResolvable
 }
