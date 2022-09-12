@@ -2,6 +2,10 @@
   "branches": [
     "main",
     {
+      "name": "dev",
+      "prerelease": true
+    },
+    {
       "name": "feat-*",
       "prerelease": true
     }
@@ -16,8 +20,6 @@
           { "type": "chore", "release": "patch" },
           
           { "type": "style", "release": false },
-          { "type": "workflow", "release": false },
-          { "type": "wf", "release": false },
           { "type": "ci", "release": false },
           
           { "type": "BREAKING", "release": "major" }
