@@ -2,7 +2,7 @@
   "branches": [
     "main",
     {
-      "name": "dev",
+      "name": "feat-*",
       "prerelease": true
     }
   ],
@@ -19,8 +19,6 @@
           { "type": "workflow", "release": false },
           { "type": "wf", "release": false },
           { "type": "ci", "release": false },
-          { "type": "test", "release": false },
-          { "type": "tests", "release": false },
           
           { "type": "BREAKING", "release": "major" }
         ]
