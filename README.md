@@ -1,10 +1,12 @@
 # ReVanced Links
-A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror.
+A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror.  
+**Please read the [cons](#cons) before using this library!**
 
 <details><summary><strong>Table of contents</strong></summary>
 
 - [ReVanced Links](#revanced-links)
   - [Features](#features)
+  - [Cons](#cons)
   - [Installation](#installation)
   - [Getting Started](#getting-started)
     - [Get essentials from GitHub](#get-essentials-from-github)
@@ -23,9 +25,11 @@ A library to fetch latest ReVanced essentials and scrape app packages supported 
  - Feature-rich
  - Fast and efficient
  - Object-oriented
- - **Supports both ESM and CJS**
  - **ALL** Promise-based
  - [Documentation](https://palmdevs.github.io/revanced-links)
+
+## Cons
+ - Supports only ESM, due to `node-fetch@>=3` dropping support for CommonJS
 
 ## Installation
 Head to your terminal and install the package
