@@ -1,6 +1,6 @@
 # ReVanced Links
-A library to fetch latest ReVanced essentials and scrape app packages supported by ReVanced from APKMirror.  
-**Please read the [cons](#cons) before using this library!**
+A library to fetch latest ReVanced essentials and scrape any app packages from APKMirror.  
+- **👋 Hey there! Please read [this section](#cons) before using this library!**
 
 <details><summary><strong>Table of contents</strong></summary>
 
@@ -29,7 +29,7 @@ A library to fetch latest ReVanced essentials and scrape app packages supported 
  - [Documentation](https://palmdevs.github.io/revanced-links)
 
 ## Cons
- - Supports only ESM, due to `node-fetch@>=3` dropping support for CommonJS
+ - Only supports ESM, due to `node-fetch@3` dropping support for CommonJS
 
 ## Installation
 Head to your terminal and install the package
@@ -40,7 +40,7 @@ yarn add revanced-links
 ```
 
 ## Getting Started
-Here are some example snippets for you to get started.  
+Here are some examples for you to get started.  
 If you want the full documentation, please refer to [here](https://palmdevs.github.io/revanced-links/) instead.
 
 ### Get essentials from GitHub
@@ -93,15 +93,17 @@ const url = await ams.fetchDownload('google-inc/google-opinion-rewards', '202208
 ```
 
 ## Contribute
-To contribute, fork the `main` branch and then make a pull request.  
+To contribute, fork the `main` branch *(and ONLY the `main` branch)* and then make a pull request with modifications.  
 Please note that some pull requests may not be merged.
 
 ### Setting up the environment
+**Bolded text** means it is required
+
 Make sure these are installed:
  - **Node.js Latest (18.x.x as of today)**
  - **Git**
  - IDE
- - GitHub Desktop (if you need it)
+ - GitHub Desktop
 
 To clone this repository, you could use GitHub Desktop, or `git` in command-line
 ```sh
@@ -114,17 +116,17 @@ npm install
 yarn install
 ```
 #### Update your environment variables
-See the `.env.example` file for more information
+See the [`.env.example`](./.env.example) file for more information
 
 ### Scripts
-When there are scripts, there are productivity. Here's a list of scripts you should know about.  
-**Note**: Anything ending in `:nc` means no-cleanup, this usually results in junk files and possibly weird errors.
-  - `watch`, `start`, `start:nc`: Starts the development environment, your code will automatically compile on save
-  - `compile`, `compile:nc`: Only compiles the code, doesn't make documentation
-  - `docs`, `docs:nc`: Only makes documentation, doesn't compile code
-  - `build`, `build:nc`: Builds both documentation and distribution
-  - `cleanup`: This script is ran by other scripts, but this deletes `dist/` and `docs/`
-  - `test`: Just tests the whole library
+There are scripts! Here's a list of scripts you should know about.  
+**Note**: Anything ending in `:nc` means no-cleanup, this usually result in junk files.
+  - `watch`, `start`, `start:nc`: Starts the development environment, your code will automatically be compiled and tested on save
+  - `compile`, `compile:nc`: Compiles code to distributable
+  - `docs`, `docs:nc`: Generates documentation
+  - `build`, `build:nc`: Generates and compiles both documentation and distribution
+  - `cleanup`: Cleans things up, deletes `dist/` and `docs/`
+  - `test`: Tests the whole library
 
 ### You're ready!
 You're ready to be cool like a hackerman. 😎  
@@ -132,4 +134,4 @@ Now you can brag to your non-programmer friends about it!
 
 ## Discussions
 We have a Discord server for [NRVM builder](https://github.com/PalmDevs/nrvm) which is closely related to this project.  
-You could join it with this [link](https://discord.gg/mHq2bTfeSa), there is a channel called **#revanced-links-discussions** specifically made for this purpose.
+You could join it with this [link](https://discord.gg/mHq2bTfeSa), there is a forum channel called **#rvl-lib-forums** specifically made for this purpose.
