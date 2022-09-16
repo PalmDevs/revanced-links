@@ -8,13 +8,17 @@
     {
       "name": "feat-*",
       "prerelease": true
+    },
+    {
+      "name": "fix-*",
+      "prerelease": true
     }
   ],
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "conventionalCommits",
+        "preset": "angular",
         "releaseRules": [
           { "type": "style", "release": false },
           { "type": "ci", "release": false },
