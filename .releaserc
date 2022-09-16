@@ -18,7 +18,6 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "angular",
         "releaseRules": [
           { "type": "style", "release": false },
           { "type": "ci", "release": false },
@@ -40,9 +39,9 @@
     [
       "@semantic-release/release-notes-generator",
       {
-        "preset": "conventionalCommits",
         "presetConfig": {
           "types": [
+            { "type": "BREAKING", "section": "BREAKING CHANGES" },
             { "type": "feat", "section": "Features" },
             { "type": "fix", "section": "Bug Fixes" },
             { "type": "perf", "section": "Performance Improvements" },
