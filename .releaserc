@@ -59,7 +59,7 @@
     [
       "@semantic-release/changelog",
       {
-        "changelogTitle": "Changelogs"
+        "changelogTitle": # "Changelogs"
       }
     ],
     [
