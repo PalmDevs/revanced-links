@@ -32,10 +32,10 @@ export default class ReVancedFetcher {
      * import { ReVancedFetcher } from 'revanced-downloads-links'
      * 
      * const fetcher = new ReVancedFetcher({ ... })
-     * const latestReleases = await fetcher.fetchLatestReleases()
+     * const latestReleases = await fetcher.fetchLatest()
      */
-    async fetchLatestReleases() {
-        const [cli, patches, integrations] = await Promise.all([this.cli.fetchLatestRelease(), this.patches.fetchLatestRelease(), this.integrations.fetchLatestRelease()])
+    async fetchLatest() {
+        const [cli, patches, integrations] = await Promise.all([this.cli.fetchLatest(), this.patches.fetchLatest(), this.integrations.fetchLatest()])
         return { cli, patches, integrations }
     }
 }

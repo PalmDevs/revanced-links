@@ -1,7 +1,8 @@
-import { RestEndpointMethodTypes } from '@octokit/rest'
-import RepositoryFetcher from './RepositoryFetcher.js'
+import valid from 'semver/functions/valid.js'
+import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
+import RepositoryReleasesFetcher, { RepositoryReleasesFetcherOptions } from './RepositoryReleasesFetcher.js'
 
-export default class ReVancedRepositoryFetcher extends RepositoryFetcher {
+export default class ReVancedRepositoryFetcher extends RepositoryReleasesFetcher {
 
     /**
      * Fetches releases from ReVanced-owned repositories.
@@ -22,82 +23,101 @@ export default class ReVancedRepositoryFetcher extends RepositoryFetcher {
 
 export class ReVancedPatchesFetcher {
     private readonly _fetcher: ReVancedRepositoryFetcher
+    private readonly _options: ReVancedRepositoryFetcherChildrenOptions
 
     /**
      * Fetches releases from the `revanced-patches` repository.
      * @param options Configurations and options
      */
     constructor(options: ReVancedRepositoryFetcherChildrenOptions = {}) {
-        this._fetcher = newFetcherInstanceForRepo('revanced-patches', options)
+        this._options = options
+        this._fetcher = newFetcherInstanceForRepo('revanced-patches', this._options)
     }
 
     /**
      * Fetches releases from the `revanced-patches` repository.
      * @param page The page number to fetch
-     * @returns An array of patches release assets objects
+     * @returns An array of integrations release assets download URL
      */
-    async fetchReleases(page?: number): Promise<ReVancedPatchesAssets[]> {
-        const releases = await this._fetcher.fetchReleases(page)
-        return releases.map(release => release.assets).map(this._mapRelease)
+    async fetch(page?: number): Promise<ReVancedPatchesRelease[]> {
+        const releases = await this._fetcher.fetch(page)
+        return releases.map(this._mapRelease)
     }
 
     /**
      * Fetches the latest release from the `revanced-patches` repository.
-     * @returns A patches release asset object
+     * @returns Integrations release assets download URL
      */
-    async fetchLatestRelease(): Promise<ReVancedPatchesAssets> {
-        const release = await this._fetcher.fetchLatestRelease()
-        return this._mapRelease(release.assets)
+    async fetchLatest(): Promise<ReVancedPatchesRelease> {
+        return this._mapRelease(await this._fetcher.fetchLatest())
     }
 
-    private _mapRelease(assets: RawReleaseAssets): ReVancedPatchesAssets {
-        return Object.fromEntries(
+    private _mapRelease(release: Awaited<ReturnType<RepositoryReleasesFetcher['fetchLatest']>>): ReVancedPatchesRelease {
+        const { assets, tag_name: version, prerelease } = release
+        const mappedAssets = Object.fromEntries(
             Object.entries(assets.map(asset => asset.browser_download_url))
                   .map(([ _, value ]) => [value.split('.').at(-1)!, value] as const)
-        ) as unknown as ReVancedPatchesAssets
+        ) as unknown as ReVancedPatchesRelease['assets']
+        const validatedVersion = valid(version)
+        if (!validatedVersion && this._options.throwOnFailedValidation) throw new ReVancedRepositoryFetcherChildrenError('FAILED_TO_VALIDATE_VERSION', version)
+        return { version: validatedVersion, assets: mappedAssets, tagName: version, prerelease }
     }
 }
 
 export class ReVancedCLIFetcher {
     private readonly _fetcher: ReVancedRepositoryFetcher
+    private readonly _options: ReVancedRepositoryFetcherChildrenOptions
 
     /**
      * Fetches releases from the `revanced-cli` repository.
      * @param options Configurations and options
      */
     constructor(options: ReVancedRepositoryFetcherChildrenOptions = {}) {
-        this._fetcher = newFetcherInstanceForRepo('revanced-cli', options)
+        this._options = options
+        this._fetcher = newFetcherInstanceForRepo('revanced-cli', this._options)
     }
 
     /**
      * Fetches releases from the `revanced-cli` repository.
      * @param page The page number to fetch
-     * @returns An array of CLI release assets download URL
+     * @returns An array of integrations release assets download URL
      */
-    async fetchReleases(page?: number): Promise<string[][]> {
-        const releases = await this._fetcher.fetchReleases(page)
-        return releases.map(release => release.assets.map(asset => asset.browser_download_url))
+    async fetch(page?: number): Promise<ReVancedRepositoryReleaseAssets[]> {
+        const releases = await this._fetcher.fetch(page)
+        return releases.map(({ tag_name: version, assets, prerelease }) => {
+            const validatedVersion = valid(version)
+            if (!validatedVersion && this._options.throwOnFailedValidation) throw new ReVancedRepositoryFetcherChildrenError('FAILED_TO_VALIDATE_VERSION', version)
+            return { version: validatedVersion, assets: assets.map((asset) => asset.browser_download_url), tagName: version, prerelease }
+        })
     }
 
     /**
      * Fetches the latest release from the `revanced-cli` repository.
-     * @returns CLI release assets download URL
+     * @returns Integrations release assets download URL
      */
-    async fetchLatestRelease(): Promise<string[]> {
-        const release = await this._fetcher.fetchLatestRelease()
-        return release.assets.map(asset => asset.browser_download_url)
+    async fetchLatest(): Promise<ReVancedRepositoryReleaseAssets> {
+        return this._mapRelease(await this._fetcher.fetchLatest())
+    }
+
+    private _mapRelease(release: Awaited<ReturnType<RepositoryReleasesFetcher['fetchLatest']>>) {
+        const { tag_name: version, assets, prerelease } = release
+        const validatedVersion = valid(version)
+        if (!validatedVersion && this._options.throwOnFailedValidation) throw new ReVancedRepositoryFetcherChildrenError('FAILED_TO_VALIDATE_VERSION', version)
+        return { version: validatedVersion, assets: assets.map((asset) => asset.browser_download_url), tagName: version, prerelease }
     }
 }
 
 export class ReVancedIntegrationsFetcher {
     private readonly _fetcher: ReVancedRepositoryFetcher
+    private readonly _options: ReVancedRepositoryFetcherChildrenOptions
 
     /**
      * Fetches releases from the `revanced-integrations` repository.
      * @param options Configurations and options
      */
     constructor(options: ReVancedRepositoryFetcherChildrenOptions = {}) {
-        this._fetcher = newFetcherInstanceForRepo('revanced-integrations', options)
+        this._options = options
+        this._fetcher = newFetcherInstanceForRepo('revanced-integrations', this._options)
     }
 
     /**
@@ -105,68 +125,98 @@ export class ReVancedIntegrationsFetcher {
      * @param page The page number to fetch
      * @returns An array of integrations release assets download URL
      */
-    async fetchReleases(page?: number): Promise<string[][]> {
-        const releases = await this._fetcher.fetchReleases(page)
-        return releases.map(release => release.assets.map(asset => asset.browser_download_url))
+    async fetch(page?: number): Promise<ReVancedRepositoryReleaseAssets[]> {
+        const releases = await this._fetcher.fetch(page)
+        return releases.map(({ tag_name: version, assets, prerelease }) => {
+            const validatedVersion = valid(version)
+            if (!validatedVersion && this._options.throwOnFailedValidation) throw new ReVancedRepositoryFetcherChildrenError('FAILED_TO_VALIDATE_VERSION', version)
+            return { version: validatedVersion, assets: assets.map((asset) => asset.browser_download_url), tagName: version, prerelease }
+        })
     }
 
     /**
      * Fetches the latest release from the `revanced-integrations` repository.
      * @returns Integrations release assets download URL
      */
-    async fetchLatestRelease(): Promise<string[]> {
-        const release = await this._fetcher.fetchLatestRelease()
-        return release.assets.map(asset => asset.browser_download_url)
+    async fetchLatest(): Promise<ReVancedRepositoryReleaseAssets> {
+        return this._mapRelease(await this._fetcher.fetchLatest())
+    }
+
+    private _mapRelease(release: Awaited<ReturnType<RepositoryReleasesFetcher['fetchLatest']>>) {
+        const { tag_name: version, assets, prerelease } = release
+        const validatedVersion = valid(version)
+        if (!validatedVersion && this._options.throwOnFailedValidation) throw new ReVancedRepositoryFetcherChildrenError('FAILED_TO_VALIDATE_VERSION', version)
+        return { version: validatedVersion, assets: assets.map((asset) => asset.browser_download_url), tagName: version, prerelease }
     }
 }
 
 export function newFetcherInstanceForRepo(name: string, options: ReVancedRepositoryFetcherChildrenOptions = {}) {
-    return new ReVancedRepositoryFetcher({ repositoryName: name, ...options })
+    return new ReVancedRepositoryFetcher({ ...options, repositoryName: name })
 }
 
-export type RawReleaseAssets = RestEndpointMethodTypes["repos"]["listReleases"]["response"]["data"][number]["assets"]
+const ReVancedRepositoryFetcherChildrenErrorMessages = {
+    FAILED_TO_VALIDATE_VERSION: (v: string) => `Failed to validate version: ${v}`
+}
+const ReVancedRepositoryFetcherChildrenError = new CustomErrorConstructor(Error, ReVancedRepositoryFetcherChildrenErrorMessages).error
 
-export interface ReVancedPatchesAssets {
+export interface ReVancedRepositoryReleaseAssets {
     /**
-     * The JAR file download URL
+     * In case of failed validation and `throwOnFailedValidation` set to false, tag name will always be available for parsing
      */
-    jar: string
+    tagName: string
     /**
-     * The DEX file download URL (this used to exist in older versions)
+     * The version
      */
-    dex: string | never
+    version: string | null
     /**
-     * The JSON file download URL (this does NOT exist in older versions)
+     * An array of asset download URLs
      */
-    json: string | never
+    assets: string[]
+    /**
+     * Whether this release is a pre-release
+     */
+    prerelease: boolean
 }
 
-export interface ReVancedRepositoryFetcherChildrenOptions {
+export interface ReVancedPatchesRelease {
     /**
-     * GitHub API key
-     * @default undefined
+     * In case of failed validation and `throwOnFailedValidation` set to false, tag name will always be available for parsing
      */
-    apiKey?: string
+    tagName: string
     /**
-     * Amount of releases per fetch, use `page` parameter to specify page to fetch
-     * @default 10
+     * The version of the patches
      */
-    dataPerPage?: number
+    version: string | null
+
+    /**
+     * An object with available file extension keys whose values are the download URLs of that specific file
+     */
+    assets: {
+        /**
+         * The JAR file download URL
+         */
+        jar: string
+        /**
+         * The DEX file download URL (this used to exist in older versions)
+         */
+        dex: string | never
+        /**
+         * The JSON file download URL (this does NOT exist in older versions)
+         */
+        json: string | never
+    }
+    /**
+     * Whether this release is a pre-release
+     */
+    prerelease: boolean
 }
 
-export interface ReVancedRepositoryFetcherOptions {
+export type ReVancedRepositoryFetcherChildrenOptions = Omit<ReVancedRepositoryFetcherOptions, 'repositoryName'> & { 
     /**
-     * Repository name (github.com/revanced MUST have this repository)
+     * Whether to throw when failed validations happen
+     * @default false
      */
-    repositoryName: string
-    /**
-     * GitHub API key
-     * @default undefined
-     */
-    apiKey?: string
-    /**
-     * Amount of releases per fetch, use `page` parameter to specify page to fetch
-     * @default 10
-     */
-    dataPerPage?: number
+    throwOnFailedValidation?: boolean 
 }
+
+export type ReVancedRepositoryFetcherOptions = Omit<RepositoryReleasesFetcherOptions, 'repositoryOwner'>

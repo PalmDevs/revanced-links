@@ -2,31 +2,32 @@
 
 import { expect } from 'expect'
 import { test } from 'uvu'
-import { ReVancedLinks, App, AppPackageFetcher, APKMirrorScraper } from '../src/index.js'
+import { ReVancedLinks, App, AppPackageScraper, APKMirrorScraper } from '../src/index.js'
+import { isString } from '../src/util/Validator.js'
 
-test('get essentials from GitHub', async () => {
+test('should get essentials from GitHub correctly', async () => {
     const rl = new ReVancedLinks({
         appFetcherSettings: {
             arch: 'arm64-v8a'
         },
         gitHubSettings: {
-            apiKey: 'secret123',
+            apiKey: process.env.GITHUB_KEY,
             dataPerPage: 10,
         }
     })
 
-    const { patches, integrations, cli } = await rl.revanced.fetchLatestReleases()
-    const microG = await rl.microg.fetchLatestRelease()
+    const { patches, integrations, cli } = await rl.revanced.fetchLatest()
+    const microG = await rl.microg.fetchLatest()
 
     expect([ patches, integrations, cli, microG ].every(
-        (links) => Array.isArray(links) ? 
-            links.every(url => typeof url === 'string') :
-            Object.keys(links).every(key => typeof links[key] === 'string')
+        (links) => Array.isArray(links.assets) ?
+            links.assets.every(url => isString(url))
+        :   Object.values(links.assets).every(url => isString(url))
     )).toBe(true)
 })
 
-test('get YouTube and YouTube Music downloads', async () => {
-    const apf = new AppPackageFetcher({
+test('should get YouTube and YouTube Music downloads correctly', async () => {
+    const apf = new AppPackageScraper({
         arch: 'arm64-v8a'
     })
 
@@ -36,7 +37,7 @@ test('get YouTube and YouTube Music downloads', async () => {
     expect([ yt, ytm ].every(url => typeof url === 'string')).toBe(true)
 })
 
-test('scrapes unrelated packages', async () => {
+test('should scrape unrelated packages correctly', async () => {
     const ams = new APKMirrorScraper({
         arch: 'arm64-v8a'
     })

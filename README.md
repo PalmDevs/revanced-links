@@ -58,22 +58,22 @@ const rl = new ReVancedLinks({
     }
 })
 
-const { patches, integrations, cli } = await rl.revanced.fetchLatestReleases()
-const microG = await rl.microg.fetchLatestRelease()
+const { patches, integrations, cli } = await rl.revanced.fetchLatest()
+const microG = await rl.microg.fetchLatest()
 
 // Do something with the URLs below...
 ```
 
 ### Get YouTube and YouTube Music downloads
 ```js
-import { AppPackageFetcher, App } from 'revanced-links'
+import { AppPackageScraper, App } from 'revanced-links'
 
-const apf = new AppPackageFetcher({
+const aps = new AppPackageScraper({
     arch: 'arm64-v8a'
 })
 
-const yt = await apf.fetchLatestStableRelease(App.YouTube)
-const ytm = await apf.fetchLatestStableRelease(App.YouTubeMusic)
+const yt = await aps.fetchLatestStableRelease(App.YouTube)
+const ytm = await aps.fetchLatestStableRelease(App.YouTubeMusic)
 
 // ...
 ```
@@ -86,7 +86,6 @@ const ams = new APKMirrorScraper({
     arch: 'arm64-v8a'
 })
 
-// WARNING: This fetches using app routes, no intended support for app categories yet
 const url = await ams.fetchDownload('google-inc/google-opinion-rewards', '2022082901')
 
 // ...
@@ -97,15 +96,15 @@ To contribute, fork the `main` branch *(and ONLY the `main` branch)* and then ma
 Please note that some pull requests may not be merged.
 
 ### Setting up the environment
-**Bolded text** means it is required
+**BOLD** means required.
 
 Make sure these are installed:
- - **Node.js Latest (18.x.x as of today)**
+ - **Node.js Latest (v18+ as of today)**
  - **Git**
  - IDE
  - GitHub Desktop
 
-To clone this repository, you could use GitHub Desktop, or `git` in command-line
+To clone this repository, you could use GitHub Desktop, or `git` in command-line.
 ```sh
 git clone https://github.com/PalmDevs/revanced-links
 ```
@@ -116,17 +115,17 @@ npm install
 yarn install
 ```
 #### Update your environment variables
-See the [`.env.example`](./.env.example) file for more information
+See the `.env.example` file for more information.
 
 ### Scripts
 There are scripts! Here's a list of scripts you should know about.  
-**Note**: Anything ending in `:nc` means no-cleanup, this usually result in junk files.
-  - `watch`, `start`, `start:nc`: Starts the development environment, your code will automatically be compiled and tested on save
-  - `compile`, `compile:nc`: Compiles code to distributable
-  - `docs`, `docs:nc`: Generates documentation
-  - `build`, `build:nc`: Generates and compiles both documentation and distribution
-  - `cleanup`: Cleans things up, deletes `dist/` and `docs/`
-  - `test`: Tests the whole library
+**Note**: Anything ending in `:nc` means no-cleanup, this usually results in junk files and possibly weird errors.
+  - `watch`, `start`, `start:nc`: Starts the development environment, your code will automatically compile on save
+  - `compile`, `compile:nc`: Only compiles the code, doesn't make documentation
+  - `docs`, `docs:nc`: Only makes documentation, doesn't compile code
+  - `build`, `build:nc`: Builds both documentation and distribution
+  - `cleanup`: This script is ran by other scripts, but this deletes `dist/` and `docs/`
+  - `test`: Just tests the whole library
 
 ### You're ready!
 You're ready to be cool like a hackerman. 😎  

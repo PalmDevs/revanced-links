@@ -20,7 +20,7 @@ const ams = new APKMirrorScraper({
 // * I chose Google Opinion Rewards because it has the weirdest version names ever...
 
 test('should fetch versions correctly', async () => {
-    const versions = await ams.fetchVersionsFromAppRoute('google-inc/google-opinion-rewards')
+    const versions = await ams.fetchVersions('google-inc/google-opinion-rewards')
     expect(versions.length).toBeGreaterThan(0)
     expect(versions.some(ver => ver.title.includes('2022082901'))).toBe(true)
 })

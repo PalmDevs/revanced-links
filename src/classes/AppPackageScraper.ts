@@ -3,8 +3,6 @@
 // for multiple parts of this code, it's really useful for others!
 // ! NOTICE ! //
 
-// This is not being export due to massive pain to use, instead we have another wrapper around it
-
 import semverLessThan from 'semver/functions/lt.js'
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
 import APKMirrorScraper, { APKMirrorScraperOptions } from './APKMirrorScraper.js'
@@ -21,20 +19,21 @@ export default class AppPackageScraper {
         this._scraper = new APKMirrorScraper({ ...this._options })
     }
 
-    async fetchVersions(app: AppPackageScraperApp): Promise<AppPackageScraperAppVersion[]> {
-        const isApp = (appName: keyof typeof AppPackageScraperApp) => this._isApp(appName, app)
-        const appCategory = 
-            isApp('YouTube') ? 'youtube' :
-            isApp('YouTubeMusic') ? 'youtube-music' :
-            isApp('Twitter') ? 'twitter' :
-            isApp('Reddit') ? 'reddit' :
-            isApp('WarnWetter') ? 'warnwetter' :
-            isApp('TikTok') ? 'tik-tok' : (() => { throw new AppPackageScraperError('INVALID_APP', app) })()
-
-        const versions = await this._scraper.fetchVersions(appCategory)
+    /**
+     * Fetches available app versions.
+     * @param app The app to fetch 
+     * @returns An array of app version data
+     * @example
+     * import { AppPackageScraper, App } from 'revanced-links'
+     * 
+     * const fetcher = new AppPackageScraper({ ... })
+     * const versions = await fetcher.fetchVersions(App.YouTube)
+     */
+    async fetchVersions(app: App, page = 0) {
+        const versions = await this._scraper.fetchVersions(AppPackageScraper.toAppCategory(app), page)
 
         return versions.sort(
-            (a, b) => semverLessThan(this._fixVersion(a.version), this._fixVersion(b.version)) ? -1 : 1
+            (a, b) => a.version && b.version && semverLessThan(this._fv(a.version), this._fv(b.version)) ? -1 : 1
         )
             .filter(version => 
                 AppPackageScraper.excludableVersionsTitleList.some(
@@ -51,33 +50,77 @@ export default class AppPackageScraper {
             })
     }
 
-    async fetchDownload(app: AppPackageScraperApp, version: string, arch?: ArchResolvable) {
-        const isApp = (appName: keyof typeof AppPackageScraperApp) => this._isApp(appName, app)
-        const appCategory = 
-            isApp('YouTube') ? 'google-inc/youtube' :
-            isApp('YouTubeMusic') ? 'google-inc/youtube-music' :
-            isApp('Twitter') ? 'twitter-inc/twitter' :
-            isApp('Reddit') ? 'redditinc/reddit' :
-            isApp('WarnWetter') ? 'deutscher-wetterdienst/warnwetter' :
-            isApp('TikTok') ? 'tiktok-pte-ltd/tik-tok' : (() => { throw new AppPackageScraperError('INVALID_APP', app) })()
-
-        return await this._scraper.fetchDownload(appCategory, version, arch)
+    /**
+     * Fetches a download URL for an app with a specific version.
+     * @param app The app to fetch
+     * @param version A version of the app to fetch
+     * @returns A download URL
+     * @example
+     * import { AppPackageScraper, App } from 'revanced-links'
+     * 
+     * const fetcher = new AppPackageScraper({ ... })
+     * const url = await fetcher.fetchDownload(App.YouTube, '17.33.42')
+     */
+    async fetchDownload(app: App, version: string, arch?: ArchResolvable) {
+        return await this._scraper.fetchDownload(AppPackageScraper.toAppCategory(app), version, arch)
     }
 
-    private _isApp(entry: keyof typeof AppPackageScraperApp, value: AppPackageScraperApp) {
-        return AppPackageScraperApp[entry] === value
+    /**
+     * Fetches a download URL for the latest version of an app package.
+     * @param app The app to fetch 
+     * @returns A download URL
+     * @example
+     * import { AppPackageScraper, App } from 'revanced-links'
+     * 
+     * const fetcher = new AppPackageScraper({ ... })
+     * const url = await fetcher.fetchLatestStableRelease(App.YouTube)
+     */
+    async fetchLatestRelease(app: App, arch?: ArchResolvable) {
+        const version = (await this.fetchVersions(app))[0]?.version
+        if (!version) return null
+        return this.fetchDownload(app, version, arch)
     }
 
-    private _fixVersion(string: string) {
+    /**
+     * Fetches a download URL for the latest stable *(non-beta, non-alpha)* version of an app package.
+     * @param app The app to fetch 
+     * @returns A download URL
+     * @example
+     * import { AppPackageScraper, App } from 'revanced-links'
+     * 
+     * const fetcher = new AppPackageScraper({ ... })
+     * const url = await fetcher.fetchLatestStableRelease(App.YouTube)
+     */
+    async fetchLatestStableRelease(app: App, arch?: ArchResolvable) {
+        const version = (await this.fetchVersions(app)).find(v => !(v.alpha || v.beta))?.version
+        if (!version) return null
+        return this.fetchDownload(app, version, arch)
+    }
+
+    /**
+     * Converts `App` to `AppCategory`. Useful for those who wants to scrape using `APKMirrorScraper`.
+     * @param app The app ID you want to convert
+     * @returns App category
+     * @example
+     * import { AppPackageScraper, App } from 'revanced-links'
+     * 
+     * AppPackageScraper.toAppCategory(App.YouTube) // 'google-inc/youtube'
+     */
+    static toAppCategory(app: App) {
+        if (App[app]) return AppCategory[App[app] as keyof typeof App]
+        else throw new AppPackageScraperError('INVALID_APP', app)
+    }
+
+    private _fv(string: string) {
         return string.replace(/\.0([0-9]+)/g, '.$1')
             .replace(/^([0-9]+\.[0-9]+)(?:.*)$/, '$1.0')
             .replace(/^([0-9]+)(?:.*)$/, '$1.0.0')
-    }
+    }   
 }
 
 export interface AppPackageScraperOptions extends APKMirrorScraperOptions {}
 
-export interface AppPackageScraperAppVersion {
+export interface AppVersion {
     beta: boolean
     alpha: boolean
     version: string
@@ -85,7 +128,7 @@ export interface AppPackageScraperAppVersion {
 
 export { ArchResolvable }
 
-export enum AppPackageScraperApp {
+export enum App {
     YouTube,
     YouTubeMusic,
     Twitter,
@@ -94,8 +137,18 @@ export enum AppPackageScraperApp {
     TikTok
 }
 
+export enum AppCategory {
+    YouTube = 'google-inc/youtube',
+    YouTubeMusic = 'google-inc/youtube-music',
+    Twitter = 'twitter-inc/twitter',
+    Reddit = 'redditinc/reddit',
+    WarnWetter = 'deutscher-wetterdienst/warnwetter',
+    TikTok = 'tiktok-pte-ltd/tik-tok'
+}
+
 const AppPackageScraperErrorMessages = {
-    'INVALID_APP': (app?: AppPackageScraperApp) => `Invalid app ID '${app}'`,
+    'INVALID_APP': (app?: App) => `Invalid app ID '${app}'`,
+    'NO_VERSIONS_AVAILABLE': 'No versions available'
 } as const
 
 const AppPackageScraperError = new CustomErrorConstructor(Error, AppPackageScraperErrorMessages).error

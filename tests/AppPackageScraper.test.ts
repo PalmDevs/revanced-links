@@ -1,8 +1,8 @@
 import { expect } from 'expect'
 import { test } from 'uvu'
-import { App, AppPackageFetcher } from '../src/index.js'
+import { App, AppPackageScraper } from '../src/index.js'
 
-const apf = new AppPackageFetcher({
+const apf = new AppPackageScraper({
     arch: 'arm64-v8a'
 })
 
