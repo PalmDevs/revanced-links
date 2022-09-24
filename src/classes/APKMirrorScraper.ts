@@ -75,13 +75,13 @@ export default class APKMirrorScraper {
         const $ = load(arb)
         const href = $('#primary div.table.noMargins div.table-row div.table-cell.center a.fontBlack').attr('href')
         if (!href) {
-            if (this._options.throwOnBadWebFormat) this.__twf()
+            if (this._options.throwOnBadWebFormat) return this.__twf()
             return []
         }
 
         const matches = href.match(APKMirrorScraper.APP_CATEGORY_QUERY_STRING_REGEX)
         if (!matches || !matches[0]) {
-            if (this._options.throwOnBadWebRoute) this.__twr()
+            if (this._options.throwOnBadWebRoute) return this.__twr()
             return []
         }
 
@@ -140,7 +140,7 @@ export default class APKMirrorScraper {
         
 
         if (!href) {
-            if (TOFW) this.__twf()
+            if (TOFW) return this.__twf()
             return null
         }
 
@@ -150,7 +150,7 @@ export default class APKMirrorScraper {
 
         const finalPageUrl = load(downloadPageBody)('a[class^="accent_bg btn btn-flat downloadButton"]').first().attr('href')
         if (!finalPageUrl) {
-            if (TOFW) this.__twf()
+            if (TOFW) return this.__twf()
             return null
         }
 
@@ -158,7 +158,7 @@ export default class APKMirrorScraper {
         const downloadUrl = `${APKMirrorScraper.BASE_DOMAIN}${load(finalPageBody)('a[rel="nofollow"]').first().attr('href')}`
 
         if (!downloadUrl) {
-            if (TOFW) this.__twf()
+            if (TOFW) return this.__twf()
             return null
         }
         return downloadUrl
@@ -212,7 +212,7 @@ export default class APKMirrorScraper {
             })
 
             if (!isElement(p)) {
-                if (TOFW) this.__twf()
+                if (TOFW) return this.__twf()
                 continue
             }
 
@@ -223,7 +223,7 @@ export default class APKMirrorScraper {
             })
 
             if (!span || !isElement(span)) {
-                if (TOFW) this.__twf()
+                if (TOFW) return this.__twf()
                 continue
             }
 
@@ -231,7 +231,7 @@ export default class APKMirrorScraper {
             // * <Array>.find() does not automatically throw an error when something is not found
             const element = span.children.find(child => isText(child))
             if (!isText(element)) {
-                if (TOFW) this.__twf()
+                if (TOFW) return this.__twf()
                 continue
             }
 
@@ -239,7 +239,7 @@ export default class APKMirrorScraper {
             const text = element.data.trim()
             const matches = text.match(APKMirrorScraper.EXTENDED_SEMVER_REGEX)
             if (!matches || !matches[0] || matches.length > 1) {
-                if (TOFV) this.__tv(text)
+                if (TOFV) return this.__tv(text)
                 continue
             }
 
@@ -256,7 +256,7 @@ export default class APKMirrorScraper {
     }
 
     private __twf(): never {
-        this.__twf()
+        throw new APKMirrorScraperError('INVALID_WEB_FORMAT')
     }
 
     private __twr(): never {
