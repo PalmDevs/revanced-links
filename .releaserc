@@ -24,6 +24,7 @@
           { "type": "ci", "release": false },
           { "type": "test", "release": false },
 
+          { "type": "merge", "release": "patch" },
           { "type": "docs", "release": "patch" },
           { "type": "refactor", "release": "patch" },
           { "type": "chore", "release": "patch" },
@@ -44,18 +45,19 @@
         "presetConfig": {
           "preset": "conventionalCommits",
           "types": [
-            { "type": "BREAKING", "section": "BREAKING CHANGES" },
-            { "type": "types", "section": "Typings" },
-            { "type": "feat", "section": "Features" },
-            { "type": "fix", "section": "Bug Fixes" },
-            { "type": "perf", "section": "Performance Improvements" },
-            { "type": "revert", "section": "Reverts" },
+            { "type": "BREAKING", "section": "BREAKING CHANGES", "hidden": false },
+            { "type": "types", "section": "Typings", "hidden": false },
+            { "type": "feat", "section": "Features", "hidden": false },
+            { "type": "fix", "section": "Bug Fixes", "hidden": false },
+            { "type": "perf", "section": "Performance Improvements", "hidden": false },
+            { "type": "revert", "section": "Reverts", "hidden": false },
             { "type": "docs", "section": "Documentation", "hidden": false },
             { "type": "style", "section": "Code Style Improvements", "hidden": false },
             { "type": "chore", "section": "Miscellaneous", "hidden": false },
             { "type": "refactor", "section": "Code Refactors", "hidden": false },
             { "type": "test", "section": "Tests", "hidden": false },
-            { "type": "ci", "section": "Workspace Improvements", "hidden": false }
+            { "type": "ci", "section": "Workspace Improvements", "hidden": false },
+            { "type": "merge", "section": "Code Merges", "hidden": true }
           ]
         }
       }
