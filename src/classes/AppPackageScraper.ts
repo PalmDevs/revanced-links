@@ -5,7 +5,7 @@
 
 import semverLessThan from 'semver/functions/lt.js'
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
-import APKMirrorScraper, { APKMirrorScraperOptions } from './APKMirrorScraper.js'
+import APKMirrorScraper, { APKMirrorScraperAppVersion, APKMirrorScraperOptions } from './APKMirrorScraper.js'
 import type { ArchResolvable } from './APKMirrorScraper.js'
 
 export default class AppPackageScraper {
@@ -45,7 +45,8 @@ export default class AppPackageScraper {
                 return {
                     alpha: !!title.includes('alpha'),
                     beta: !!title.includes('beta'),
-                    version: version.version
+                    version: version.version,
+                    title: version.title
                 }
             })
     }
@@ -78,7 +79,7 @@ export default class AppPackageScraper {
     async fetchLatestRelease(app: App, arch?: ArchResolvable) {
         const version = (await this.fetchVersions(app))[0]?.version
         if (!version) return null
-        return this.fetchDownload(app, version, arch)
+        return await this.fetchDownload(app, version, arch)
     }
 
     /**
@@ -120,10 +121,15 @@ export default class AppPackageScraper {
 
 export interface AppPackageScraperOptions extends APKMirrorScraperOptions {}
 
-export interface AppVersion {
+export interface AppVersion extends APKMirrorScraperAppVersion {
+    /**
+     * Whether this app release is a beta release
+     */
     beta: boolean
+    /**
+     * Whether this app release is an alpha release
+     */
     alpha: boolean
-    version: string
 }
 
 export { ArchResolvable }
