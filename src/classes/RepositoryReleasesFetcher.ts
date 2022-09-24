@@ -3,9 +3,9 @@ import { RequestError } from '@octokit/request-error'
 import CustomErrorConstructor from '../util/CustomErrorConstructor.js'
 import { isNumberButNotNaN, isEmptyString, isNotEmptyArray, doesMatch } from '../util/Validator.js'
 
-export const REPOSITORY_REGEX = /[a-zA-Z-]+/
-
 export default class RepositoryReleasesFetcher {
+    static readonly REPOSITORY_REGEX = /[a-zA-Z-]+/
+
     private readonly _octokit: Octokit
     protected readonly _options: RepositoryReleasesFetcherOptions
 
@@ -26,7 +26,7 @@ export default class RepositoryReleasesFetcher {
         if (typeof options.dataPerPage === 'number' && !isNumberButNotNaN(options.dataPerPage)) throw new RepositoryReleasesFetcherError('BAD_OPTIONS', 'options.dataPerPage', 'be', ['a number, but not NaN']);
         (['repositoryName', 'repositoryOwner'] as const).forEach((key) => {
             if (isEmptyString(options[key])) throw new RepositoryReleasesFetcherError('BAD_OPTIONS', `options.${key}`, 'be', ['a non-empty string'])
-            if (!doesMatch(key, REPOSITORY_REGEX)) throw new RepositoryReleasesFetcherError('BAD_OPTIONS', `options.${key}`, 'match', [REPOSITORY_REGEX.source])
+            if (!doesMatch(key, RepositoryReleasesFetcher.REPOSITORY_REGEX)) throw new RepositoryReleasesFetcherError('BAD_OPTIONS', `options.${key}`, 'match', [RepositoryReleasesFetcher.REPOSITORY_REGEX.source])
         })
         if (typeof options.apiKey !== 'undefined' && isEmptyString(options.apiKey)) throw new RepositoryReleasesFetcherError('BAD_OPTIONS', 'options.apiKey', 'be', ['a non-empty string'])
 
