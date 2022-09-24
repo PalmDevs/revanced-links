@@ -50,7 +50,7 @@ export default class APKMirrorScraper {
         this._match(options.arch, 'options.arch', 'ARCH_REGEX')
 
         this._options = Object.assign<Omit<APKMirrorScraperOptions, `throwOn${'BadWebFormat' | 'FailedVersionValidation'}`>, APKMirrorScraperOptions>(
-            { arch: 'arm64-v8a', useFallbackArch: true },
+            { arch: 'arm64-v8a', useFallbackArch: true, throwOnBadWebRoute: true },
             options
         )
     }
@@ -74,10 +74,16 @@ export default class APKMirrorScraper {
 
         const $ = load(arb)
         const href = $('#primary div.table.noMargins div.table-row div.table-cell.center a.fontBlack').attr('href')
-        if (!href) this.__twf()
+        if (!href) {
+            if (this._options.throwOnBadWebFormat) this.__twf()
+            return []
+        }
 
         const matches = href.match(APKMirrorScraper.APP_CATEGORY_QUERY_STRING_REGEX)
-        if (!matches || !matches[0]) this.__twr()
+        if (!matches || !matches[0]) {
+            if (this._options.throwOnBadWebRoute) this.__twr()
+            return []
+        }
 
         const acUrl = `${APKMirrorScraper.UPLOADS_ROUTE}${page > 1 ? `page/${page}` : ''}/${matches[0]}`
         return await this._scrape(await this._req(acUrl))
@@ -97,6 +103,7 @@ export default class APKMirrorScraper {
      */
     async fetchDownload(appRoute: string, version: string, arch?: ArchResolvable) {
         const actualArch = arch || this._options.arch
+        const { throwOnBadWebFormat: TOFW } = this._options
 
         // @Validate
         this._match(appRoute, 'appRoute', 'APP_ROUTE_REGEX')
@@ -132,19 +139,28 @@ export default class APKMirrorScraper {
         }
         
 
-        if (!href) this.__twf()
+        if (!href) {
+            if (TOFW) this.__twf()
+            return null
+        }
 
         // * The redirect shenanigans
 
         const downloadPageBody = await this._u2t(`${APKMirrorScraper.BASE_DOMAIN}${href}`)
 
         const finalPageUrl = load(downloadPageBody)('a[class^="accent_bg btn btn-flat downloadButton"]').first().attr('href')
-        if (!finalPageUrl) this.__twf()
+        if (!finalPageUrl) {
+            if (TOFW) this.__twf()
+            return null
+        }
 
         const finalPageBody = await this._u2t(`${APKMirrorScraper.BASE_DOMAIN}${finalPageUrl}`)
         const downloadUrl = `${APKMirrorScraper.BASE_DOMAIN}${load(finalPageBody)('a[rel="nofollow"]').first().attr('href')}`
 
-        if (!downloadUrl) this.__twf()
+        if (!downloadUrl) {
+            if (TOFW) this.__twf()
+            return null
+        }
         return downloadUrl
     }
 
@@ -223,7 +239,7 @@ export default class APKMirrorScraper {
             const text = element.data.trim()
             const matches = text.match(APKMirrorScraper.EXTENDED_SEMVER_REGEX)
             if (!matches || !matches[0] || matches.length > 1) {
-                if (TOFV) this.__tv()
+                if (TOFV) this.__tv(text)
                 continue
             }
 
@@ -235,8 +251,8 @@ export default class APKMirrorScraper {
         return versions
     }
 
-    private __tv(): never {
-        throw new APKMirrorScraperError('VERSION_UNMATCH')
+    private __tv(v: string): never {
+        throw new APKMirrorScraperError('VERSION_UNMATCH', v)
     }
 
     private __twf(): never {
@@ -256,18 +272,22 @@ export interface APKMirrorScraperOptions {
     arch?: ArchResolvable
     /**
      * Whether to throw when failed version validations while fetching versions happen.
-     * **ERRORS WILL STILL THROW**! If the scraper cannot find a single version.
      * @default false
      */
     throwOnFailedVersionValidation?: boolean
     /**
      * Whether to throw when receiving bad web formatting while fetching versions.
-     * **ERRORS WILL STILL THROW**! If the scraper cannot find a single version.
      * @default false
      */
     throwOnBadWebFormat?: boolean
     /**
+     * Whether to throw when receiving unmatched redirects from the server
+     * @default true
+     */
+    throwOnBadWebRoute?: boolean
+    /**
      * Whether to use any other architecture that supports the same instruction sets
+     * @default true
      */
     useFallbackArch?: boolean
 }
@@ -289,7 +309,7 @@ const APKMirrorScraperErrorMessages = {
     'REQUEST_NOT_OK': (code?: number) => `Host did not return an OK status code after fetching${code ? `, status code was ${code}` : ''}`,
     'INVALID_WEB_FORMAT': 'Host may have changed website formatting, cannot scrape',
     'INVALID_WEB_ROUTE': 'Host may have changed website routing configuration, cannot scrape',
-    'VERSION_UNMATCH': 'Version string format is not supported, please make an issue about this',
+    'VERSION_UNMATCH': (v: string) => `Version string \`${v}\` format is not supported, please make an issue about this`,
     'BAD_OPTIONS': (property?: string, what?: string, should?: string[]) => `Bad options${property ? ` for ${property}${isNotEmptyArray(should) ? `, must ${what} ${should!.join(', ')}` : ''}` : ''}`
 } as const
 
