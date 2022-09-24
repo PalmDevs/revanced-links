@@ -18,6 +18,7 @@
     [
       "@semantic-release/commit-analyzer",
       {
+        "preset": "conventionalCommits",
         "releaseRules": [
           { "type": "style", "release": false },
           { "type": "ci", "release": false },
@@ -40,6 +41,7 @@
       "@semantic-release/release-notes-generator",
       {
         "presetConfig": {
+          "preset": "conventionalCommits",
           "types": [
             { "type": "BREAKING", "section": "BREAKING CHANGES" },
             { "type": "feat", "section": "Features" },
