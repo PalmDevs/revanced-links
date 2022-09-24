@@ -1,5 +1,12 @@
 # Changelogs
 
+## [2.0.4](https://github.com/PalmDevs/revanced-links/compare/v2.0.3...v2.0.4) (2022-09-24)
+
+
+### Bug Fixes
+
+* **AppPackageScraper:** fetchVersions() not returning `<AppVersion>.title` ([508d07e](https://github.com/PalmDevs/revanced-links/commit/508d07ecb3cd32d875519165a319b207a8cbb1cd))
+
 ## [2.0.3](https://github.com/PalmDevs/revanced-links/compare/v2.0.2...v2.0.3) (2022-09-24)
 
 
