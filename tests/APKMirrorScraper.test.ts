@@ -25,6 +25,11 @@ test('should fetch versions correctly', async () => {
     expect(versions.some(ver => ver.title.includes('2022082901'))).toBe(true)
 })
 
+test('should default to fallback arch correctly', async () => {
+    const url = await ams.fetchDownload('etermax/trivia-crack', '3.181.1')
+    expect(typeof url).toBe('string')
+})
+
 test('should fetch downloads correctly', async () => {
     const url = await ams.fetchDownload('google-inc/google-opinion-rewards', '2022082901')
     expect(url).toMatch(/https:\/\/apkmirror.com\/wp-content\/themes\/APKMirror\/download.php\?id=\d+&key=[a-z0-9]+/)
